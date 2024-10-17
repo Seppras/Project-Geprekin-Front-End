@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Item Sold</title>
+    <link rel="stylesheet" href="../../css/output.css" />
+    <!-- alpine -->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- jquery -->
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"></script>
+    <!-- datatable -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/2.0.8/css/dataTables.tailwindcss.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.tailwindcss.js"></script>
+    <link href="../../css/output.css" rel="stylesheet" />
+
+    <style>
+      .modal-active {
+        display: flex;
+      }
+      /* Customize datepicker colors */
+      .datepicker-picker {
+        background-color: white !important;
+        color: black !important;
+      }
+
+      .datepicker-cell,
+      .datepicker-dropdown .datepicker-months .month,
+      .datepicker-dropdown .datepicker-years .year {
+        color: black !important;
+      }
+
+      .datepicker-dropdown .datepicker-days .day:hover,
+      .datepicker-dropdown .datepicker-months .month:hover,
+      .datepicker-dropdown .datepicker-years .year:hover {
+        background-color: #d1d5db !important;
+      }
+    </style>
+  </head>
+  <body class="bg-bg1">
+    <div class="bg-orange-500 rounded-b-3xl md:hidden sticky top-0">
+      <!-- Header -->
+      <header>
+        <!-- Navigation -->
+        <nav class="p-2 flex items-center justify-between bg-transparent">
+          <!-- Hamburger Menu (Mobile Only) -->
+          <div class="md:hidden flex items-center">
+            <button class="navbar-burger flex items-center text-white p-3">
+              <svg
+                class="block h-4 w-4 fill-current"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg">
+                <title>Mobile menu</title>
+                <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Fill Hamburger Menu -->
+          <div class="navbar-menu relative z-50 hidden">
+            <div
+              class="navbar-backdrop fixed inset-0 bg-gray-800 opacity-25"></div>
+            <nav
+              class="fixed top-0 left-0 bottom-0 flex flex-col w-5/6 max-w-sm py-6 px-6 bg-white border-r overflow-y-auto">
+              <div class="flex justify-between mb-8">
+                <a href="#" class="flex justify-center w-full">
+                  <img src="../../asset/image/logo1.png" class="" alt="logo" />
+                </a>
+                <button class="navbar-close">
+                  <svg
+                    class="h-6 w-6 text-gray-400 cursor-pointer hover:text-gray-500"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M6 18L18 6M6 6l12 12"></path>
+                  </svg>
+                </button>
+              </div>
+              <div>
+                <ul>
+                  <!-- Dashboard -->
+                  <li>
+                    <a
+                      href="DSC.html"
+                      class="flex items-center gap-3 w-full text-black font-medium whitespace-nowrap py-3 transition ease-in-out">
+                      <span
+                        class="material-symbols-outlined rounded-full p-2 bg-white">
+                        <svg
+                          width="25px"
+                          height="25px"
+                          viewBox="0 0 15 15"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg">
+                          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                          <g
+                            id="SVGRepo_tracerCarrier"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <path
+                              fill-rule="evenodd"
+                              clip-rule="evenodd"
+                              d="M2.8 1L2.74967 0.99997C2.52122 0.999752 2.32429 0.999564 2.14983 1.04145C1.60136 1.17312 1.17312 1.60136 1.04145 2.14983C0.999564 2.32429 0.999752 2.52122 0.99997 2.74967L1 2.8V5.2L0.99997 5.25033C0.999752 5.47878 0.999564 5.67572 1.04145 5.85017C1.17312 6.39864 1.60136 6.82688 2.14983 6.95856C2.32429 7.00044 2.52122 7.00025 2.74967 7.00003L2.8 7H5.2L5.25033 7.00003C5.47878 7.00025 5.67572 7.00044 5.85017 6.95856C6.39864 6.82688 6.82688 6.39864 6.95856 5.85017C7.00044 5.67572 7.00025 5.47878 7.00003 5.25033L7 5.2V2.8L7.00003 2.74967C7.00025 2.52122 7.00044 2.32429 6.95856 2.14983C6.82688 1.60136 6.39864 1.17312 5.85017 1.04145C5.67572 0.999564 5.47878 0.999752 5.25033 0.99997L5.2 1H2.8ZM2.38328 2.01382C2.42632 2.00348 2.49222 2 2.8 2H5.2C5.50779 2 5.57369 2.00348 5.61672 2.01382C5.79955 2.05771 5.94229 2.20045 5.98619 2.38328C5.99652 2.42632 6 2.49222 6 2.8V5.2C6 5.50779 5.99652 5.57369 5.98619 5.61672C5.94229 5.79955 5.79955 5.94229 5.61672 5.98619C5.57369 5.99652 5.50779 6 5.2 6H2.8C2.49222 6 2.42632 5.99652 2.38328 5.98619C2.20045 5.94229 2.05771 5.79955 2.01382 5.61672C2.00348 5.57369 2 5.50779 2 5.2V2.8C2 2.49222 2.00348 2.42632 2.01382 2.38328C2.05771 2.20045 2.20045 2.05771 2.38328 2.01382ZM9.8 1L9.74967 0.99997C9.52122 0.999752 9.32429 0.999564 9.14983 1.04145C8.60136 1.17312 8.17312 1.60136 8.04145 2.14983C7.99956 2.32429 7.99975 2.52122 7.99997 2.74967L8 2.8V5.2L7.99997 5.25033C7.99975 5.47878 7.99956 5.67572 8.04145 5.85017C8.17312 6.39864 8.60136 6.82688 9.14983 6.95856C9.32429 7.00044 9.52122 7.00025 9.74967 7.00003L9.8 7H12.2L12.2503 7.00003C12.4788 7.00025 12.6757 7.00044 12.8502 6.95856C13.3986 6.82688 13.8269 6.39864 13.9586 5.85017C14.0004 5.67572 14.0003 5.47878 14 5.25033L14 5.2V2.8L14 2.74967C14.0003 2.52122 14.0004 2.32429 13.9586 2.14983C13.8269 1.60136 13.3986 1.17312 12.8502 1.04145C12.6757 0.999564 12.4788 0.999752 12.2503 0.99997L12.2 1H9.8ZM9.38328 2.01382C9.42632 2.00348 9.49222 2 9.8 2H12.2C12.5078 2 12.5737 2.00348 12.6167 2.01382C12.7995 2.05771 12.9423 2.20045 12.9862 2.38328C12.9965 2.42632 13 2.49222 13 2.8V5.2C13 5.50779 12.9965 5.57369 12.9862 5.61672C12.9423 5.79955 12.7995 5.94229 12.6167 5.98619C12.5737 5.99652 12.5078 6 12.2 6H9.8C9.49222 6 9.42632 5.99652 9.38328 5.98619C9.20045 5.94229 9.05771 5.79955 9.01382 5.61672C9.00348 5.57369 9 5.50779 9 5.2V2.8C9 2.49222 9.00348 2.42632 9.01382 2.38328C9.05771 2.20045 9.20045 2.05771 9.38328 2.01382ZM2.74967 7.99997L2.8 8H5.2L5.25033 7.99997C5.47878 7.99975 5.67572 7.99956 5.85017 8.04145C6.39864 8.17312 6.82688 8.60136 6.95856 9.14983C7.00044 9.32429 7.00025 9.52122 7.00003 9.74967L7 9.8V12.2L7.00003 12.2503C7.00025 12.4788 7.00044 12.6757 6.95856 12.8502C6.82688 13.3986 6.39864 13.8269 5.85017 13.9586C5.67572 14.0004 5.47878 14.0003 5.25033 14L5.2 14H2.8L2.74967 14C2.52122 14.0003 2.32429 14.0004 2.14983 13.9586C1.60136 13.8269 1.17312 13.3986 1.04145 12.8502C0.999564 12.6757 0.999752 12.4788 0.99997 12.2503L1 12.2V9.8L0.99997 9.74967C0.999752 9.52122 0.999564 9.32429 1.04145 9.14983C1.17312 8.60136 1.60136 8.17312 2.14983 8.04145C2.32429 7.99956 2.52122 7.99975 2.74967 7.99997ZM2.8 9C2.49222 9 2.42632 9.00348 2.38328 9.01382C2.20045 9.05771 2.05771 9.20045 2.01382 9.38328C2.00348 9.42632 2 9.49222 2 9.8V12.2C2 12.5078 2.00348 12.5737 2.01382 12.6167C2.05771 12.7995 2.20045 12.9423 2.38328 12.9862C2.42632 12.9965 2.49222 13 2.8 13H5.2C5.50779 13 5.57369 12.9965 5.61672 12.9862C5.79955 12.9423 5.94229 12.7995 5.98619 12.6167C5.99652 12.5737 6 12.5078 6 12.2V9.8C6 9.49222 5.99652 9.42632 5.98619 9.38328C5.94229 9.20045 5.79955 9.05771 5.61672 9.01382C5.57369 9.00348 5.50779 9 5.2 9H2.8ZM9.8 8L9.74967 7.99997C9.52122 7.99975 9.32429 7.99956 9.14983 8.04145C8.60136 8.17312 8.17312 8.60136 8.04145 9.14983C7.99956 9.32429 7.99975 9.52122 7.99997 9.74967L8 9.8V12.2L7.99997 12.2503C7.99975 12.4788 7.99956 12.6757 8.04145 12.8502C8.17312 13.3986 8.60136 13.8269 9.14983 13.9586C9.32429 14.0004 9.52122 14.0003 9.74967 14L9.8 14H12.2L12.2503 14C12.4788 14.0003 12.6757 14.0004 12.8502 13.9586C13.3986 13.8269 13.8269 13.3986 13.9586 12.8502C14.0004 12.6757 14.0003 12.4788 14 12.2503L14 12.2V9.8L14 9.74967C14.0003 9.52122 14.0004 9.32429 13.9586 9.14983C13.8269 8.60136 13.3986 8.17312 12.8502 8.04145C12.6757 7.99956 12.4788 7.99975 12.2503 7.99997L12.2 8H9.8ZM9.38328 9.01382C9.42632 9.00348 9.49222 9 9.8 9H12.2C12.5078 9 12.5737 9.00348 12.6167 9.01382C12.7995 9.05771 12.9423 9.20045 12.9862 9.38328C12.9965 9.42632 13 9.49222 13 9.8V12.2C13 12.5078 12.9965 12.5737 12.9862 12.6167C12.9423 12.7995 12.7995 12.9423 12.6167 12.9862C12.5737 12.9965 12.5078 13 12.2 13H9.8C9.49222 13 9.42632 12.9965 9.38328 12.9862C9.20045 12.9423 9.05771 12.7995 9.01382 12.6167C9.00348 12.5737 9 12.5078 9 12.2V9.8C9 9.49222 9.00348 9.42632 9.01382 9.38328C9.05771 9.20045 9.20045 9.05771 9.38328 9.01382Z"
+                              fill="#C7C7C7"></path>
+                          </g>
+                        </svg>
+                      </span>
+                      Dashboard
+                    </a>
+                  </li>
+
+                  <!-- Sold -->
+                  <li>
+                    <button
+                      type="button"
+                      class="flex items-center w-full py-3 gap-3 font-medium text-black whitespace-nowrap transition duration-75 group hover:text-gray-800 hover:bg-transparent hover:rounded"
+                      aria-controls="dropdown-example"
+                      data-collapse-toggle="dropdown-example">
+                      <span
+                        class="material-symbols-outlined rounded-full p-2 bg-white">
+                        <svg
+                          width="25px"
+                          height="25px"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg">
+                          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                          <g
+                            id="SVGRepo_tracerCarrier"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <path
+                              d="M7.5 18C8.32843 18 9 18.6716 9 19.5C9 20.3284 8.32843 21 7.5 21C6.67157 21 6 20.3284 6 19.5C6 18.6716 6.67157 18 7.5 18Z"
+                              stroke="#C7C7C7"
+                              stroke-width="1.5"></path>
+                            <path
+                              d="M16.5 18.0001C17.3284 18.0001 18 18.6716 18 19.5001C18 20.3285 17.3284 21.0001 16.5 21.0001C15.6716 21.0001 15 20.3285 15 19.5001C15 18.6716 15.6716 18.0001 16.5 18.0001Z"
+                              stroke="#C7C7C7"
+                              stroke-width="1.5"></path>
+                            <path
+                              d="M2.26121 3.09184L2.50997 2.38429H2.50997L2.26121 3.09184ZM2.24876 2.29246C1.85799 2.15507 1.42984 2.36048 1.29246 2.75124C1.15507 3.14201 1.36048 3.57016 1.75124 3.70754L2.24876 2.29246ZM4.58584 4.32298L5.20507 3.89983V3.89983L4.58584 4.32298ZM5.88772 14.5862L5.34345 15.1022H5.34345L5.88772 14.5862ZM20.6578 9.88275L21.3923 10.0342L21.3933 10.0296L20.6578 9.88275ZM20.158 12.3075L20.8926 12.4589L20.158 12.3075ZM20.7345 6.69708L20.1401 7.15439L20.7345 6.69708ZM19.1336 15.0504L18.6598 14.469L19.1336 15.0504ZM5.70808 9.76V7.03836H4.20808V9.76H5.70808ZM2.50997 2.38429L2.24876 2.29246L1.75124 3.70754L2.01245 3.79938L2.50997 2.38429ZM10.9375 16.25H16.2404V14.75H10.9375V16.25ZM5.70808 7.03836C5.70808 6.3312 5.7091 5.7411 5.65719 5.26157C5.60346 4.76519 5.48705 4.31247 5.20507 3.89983L3.96661 4.74613C4.05687 4.87822 4.12657 5.05964 4.1659 5.42299C4.20706 5.8032 4.20808 6.29841 4.20808 7.03836H5.70808ZM2.01245 3.79938C2.68006 4.0341 3.11881 4.18965 3.44166 4.34806C3.74488 4.49684 3.87855 4.61727 3.96661 4.74613L5.20507 3.89983C4.92089 3.48397 4.54304 3.21763 4.10241 3.00143C3.68139 2.79485 3.14395 2.60719 2.50997 2.38429L2.01245 3.79938ZM4.20808 9.76C4.20808 11.2125 4.22171 12.2599 4.35876 13.0601C4.50508 13.9144 4.79722 14.5261 5.34345 15.1022L6.43198 14.0702C6.11182 13.7325 5.93913 13.4018 5.83723 12.8069C5.72607 12.1578 5.70808 11.249 5.70808 9.76H4.20808ZM10.9375 14.75C9.52069 14.75 8.53763 14.7482 7.79696 14.6432C7.08215 14.5418 6.70452 14.3576 6.43198 14.0702L5.34345 15.1022C5.93731 15.7286 6.69012 16.0013 7.58636 16.1283C8.45674 16.2518 9.56535 16.25 10.9375 16.25V14.75ZM4.95808 6.87H17.0888V5.37H4.95808V6.87ZM19.9232 9.73135L19.4235 12.1561L20.8926 12.4589L21.3923 10.0342L19.9232 9.73135ZM17.0888 6.87C17.9452 6.87 18.6989 6.871 19.2937 6.93749C19.5893 6.97053 19.8105 7.01643 19.9659 7.07105C20.1273 7.12776 20.153 7.17127 20.1401 7.15439L21.329 6.23978C21.094 5.93436 20.7636 5.76145 20.4632 5.65587C20.1567 5.54818 19.8101 5.48587 19.4604 5.44678C18.7646 5.369 17.9174 5.37 17.0888 5.37V6.87ZM21.3933 10.0296C21.5625 9.18167 21.7062 8.47024 21.7414 7.90038C21.7775 7.31418 21.7108 6.73617 21.329 6.23978L20.1401 7.15439C20.2021 7.23508 20.2706 7.38037 20.2442 7.80797C20.2168 8.25191 20.1002 8.84478 19.9223 9.73595L21.3933 10.0296ZM16.2404 16.25C17.0021 16.25 17.6413 16.2513 18.1566 16.1882C18.6923 16.1227 19.1809 15.9794 19.6074 15.6318L18.6598 14.469C18.5346 14.571 18.3571 14.6525 17.9744 14.6994C17.5712 14.7487 17.0397 14.75 16.2404 14.75V16.25ZM19.4235 12.1561C19.2621 12.9389 19.1535 13.4593 19.0238 13.8442C18.9007 14.2095 18.785 14.367 18.6598 14.469L19.6074 15.6318C20.0339 15.2842 20.2729 14.8346 20.4453 14.3232C20.6111 13.8312 20.7388 13.2049 20.8926 12.4589L19.4235 12.1561Z"
+                              fill="#C7C7C7"></path>
+                            <path
+                              d="M9.5 9L10.0282 12.1179"
+                              stroke="#C7C7C7"
+                              stroke-width="1.5"
+                              stroke-linecap="round"></path>
+                            <path
+                              d="M15.5283 9L15.0001 12.1179"
+                              stroke="#C7C7C7"
+                              stroke-width="1.5"
+                              stroke-linecap="round"></path>
+                          </g>
+                        </svg>
+                      </span>
+                      Sold
+                      <svg
+                        class="w-3 h-3"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 10 6">
+                        <path
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="m1 1 4 4 4-4" />
+                      </svg>
+                    </button>
+                    <ul id="dropdown-example" class="hidden py-2 space-y-2">
+                      <li>
+                        <a
+                          href="./Input_Sold.html"
+                          class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100"
+                          >Item Sold</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          href="./Input_Sold Out.html"
+                          class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100"
+                          >Expend</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          href="./Input_Non_Tunai.html"
+                          class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100"
+                          >Non Cash</a
+                        >
+                      </li>
+                    </ul>
+                  </li>
+                  <!-- Sales -->
+                  <li>
+                    <a
+                      href="../../html/User/Sales.html"
+                      class="flex items-center gap-3 w-full text-black font-medium whitespace-nowrap py-3 transition ease-in-out hover:text-gray-800 hover:bg-transparent hover:rounded">
+                      <span
+                        class="material-symbols-outlined rounded-full p-2 bg-white">
+                        <svg
+                          width="25px"
+                          height="25px"
+                          viewBox="0 0 16 16"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none">
+                          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                          <g
+                            id="SVGRepo_tracerCarrier"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <g fill="#C7C7C7">
+                              <path
+                                d="M12 2a1 1 0 011 1v10a1 1 0 11-2 0V3a1 1 0 011-1zM8 6a1 1 0 011 1v6a1 1 0 11-2 0V7a1 1 0 011-1zM5 10a1 1 0 00-2 0v3a1 1 0 102 0v-3z"></path>
+                            </g>
+                          </g>
+                        </svg>
+                      </span>
+                      Sales
+                    </a>
+                  </li>
+                  <!-- Waste -->
+                  <li>
+                    <a
+                      href="../../html/User/waste_user.html"
+                      class="flex items-center gap-3 text-black font-medium whitespace-nowrap py-3 transition ease-in-out hover:text-gray-800 hover:bg-transparent hover:rounded">
+                      <span
+                        class="material-symbols-outlined rounded-full p-2 bg-white">
+                        <svg
+                          width="25px"
+                          height="25px"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg">
+                          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                          <g
+                            id="SVGRepo_tracerCarrier"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <path
+                              d="M20.5001 6H3.5"
+                              stroke="#C7C7C7"
+                              stroke-width="1.5"
+                              stroke-linecap="round"></path>
+                            <path
+                              d="M18.8332 8.5L18.3732 15.3991C18.1962 18.054 18.1077 19.3815 17.2427 20.1907C16.3777 21 15.0473 21 12.3865 21H11.6132C8.95235 21 7.62195 21 6.75694 20.1907C5.89194 19.3815 5.80344 18.054 5.62644 15.3991L5.1665 8.5"
+                              stroke="#C7C7C7"
+                              stroke-width="1.5"
+                              stroke-linecap="round"></path>
+                            <path
+                              d="M6.5 6C6.55588 6 6.58382 6 6.60915 5.99936C7.43259 5.97849 8.15902 5.45491 8.43922 4.68032C8.44784 4.65649 8.45667 4.62999 8.47434 4.57697L8.57143 4.28571C8.65431 4.03708 8.69575 3.91276 8.75071 3.8072C8.97001 3.38607 9.37574 3.09364 9.84461 3.01877C9.96213 3 10.0932 3 10.3553 3H13.6447C13.9068 3 14.0379 3 14.1554 3.01877C14.6243 3.09364 15.03 3.38607 15.2493 3.8072C15.3043 3.91276 15.3457 4.03708 15.4286 4.28571L15.5257 4.57697C15.5433 4.62992 15.5522 4.65651 15.5608 4.68032C15.841 5.45491 16.5674 5.97849 17.3909 5.99936C17.4162 6 17.4441 6 17.5 6"
+                              stroke="#C7C7C7"
+                              stroke-width="1.5"></path>
+                          </g>
+                        </svg>
+                      </span>
+                      Waste
+                    </a>
+                  </li>
+                  <!-- Stock -->
+                  <li>
+                    <button
+                      type="button"
+                      class="flex items-center w-full py-3 gap-3 font-medium text-black whitespace-nowrap transition duration-75 group hover:text-gray-800 hover:bg-transparent hover:rounded"
+                      aria-controls="dropdown-example2"
+                      data-collapse-toggle="dropdown-example2">
+                      <span
+                        class="material-symbols-outlined rounded-full p-2 bg-white">
+                        <svg
+                          fill="#C7C7C7"
+                          height="25px"
+                          width="25px"
+                          version="1.1"
+                          id="Layer_1"
+                          xmlns="http://www.w3.org/2000/svg"
+                          xmlns:xlink="http://www.w3.org/1999/xlink"
+                          viewBox="0 0 512 512"
+                          xml:space="preserve">
+                          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                          <g
+                            id="SVGRepo_tracerCarrier"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <g>
+                              <g>
+                                <path
+                                  d="M489.17,409.527H94.822V92.526c0-9.205-7.463-16.668-16.668-16.668H22.829c-9.205,0-16.668,7.463-16.668,16.668 s7.463,16.668,16.668,16.668h38.655v317.001c0,9.205,7.463,16.668,16.668,16.668h22.074c-2.256,5.732-3.509,11.965-3.509,18.487 c0,27.927,22.72,50.648,50.648,50.648s50.648-22.721,50.648-50.648c0-6.523-1.253-12.756-3.509-18.487h170.338 c-2.256,5.732-3.509,11.965-3.509,18.487c0,27.927,22.72,50.648,50.648,50.648s50.649-22.721,50.649-50.648 c0-6.523-1.253-12.756-3.509-18.487h30.048c9.205,0,16.668-7.463,16.668-16.668C505.838,416.99,498.376,409.527,489.17,409.527z M147.367,478.663c-9.545,0-17.312-7.766-17.312-17.312s7.766-17.312,17.312-17.312s17.312,7.766,17.312,17.312 C164.679,470.897,156.913,478.663,147.367,478.663z M411.984,478.663c-9.545,0-17.312-7.766-17.312-17.312 s7.766-17.312,17.312-17.312s17.312,7.766,17.312,17.312C429.296,470.897,421.529,478.663,411.984,478.663z"></path>
+                              </g>
+                            </g>
+                            <g>
+                              <g>
+                                <path
+                                  d="M489.17,0H166.311c-9.205,0-16.668,7.463-16.668,16.668c0,14.447,0,314.854,0,329.301c0,9.205,7.463,16.668,16.668,16.668 h322.86c9.205,0,16.668-7.463,16.668-16.668c0-14.447,0-314.854,0-329.301C505.838,7.463,498.376,0,489.17,0z M472.503,329.301 h-0.001H182.98V197.987h289.523V329.301z M472.503,164.65H182.98V33.337h289.523V164.65z"></path>
+                              </g>
+                            </g>
+                          </g>
+                        </svg>
+                      </span>
+                      Stock
+                      <svg
+                        class="w-3 h-3"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 10 6">
+                        <path
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="m1 1 4 4 4-4" />
+                      </svg>
+                    </button>
+                    <ul id="dropdown-example2" class="hidden py-2 space-y-2">
+                      <li>
+                        <a
+                          href="./Stok.html"
+                          class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100"
+                          >Opening Stock</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          href="Ending Stock.html"
+                          class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100"
+                          >Ending Stock</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          href="./Transfer.html"
+                          class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100"
+                          >Transfer Outlet</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          href="Purchase.html"
+                          class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100"
+                          >Purchase DC</a
+                        >
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+          </div>
+
+          <div class="flex items-center gap-x-2">
+            <!-- Logo -->
+            <a href="#">
+              <img
+                src="../../asset/image/logo1.png"
+                class="h-12 px-6 hidden md:block"
+                alt="logo" />
+            </a>
+          </div>
+
+          <!-- Account Dropdown -->
+          <div class="relative">
+            <button class="flex items-center focus:outline-none">
+              <svg
+                width="25px"
+                height="25px"
+                viewBox="0 0 32 32"
+                enable-background="new 0 0 32 32"
+                id="Layer_1"
+                version="1.1"
+                xml:space="preserve"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                fill="#FFFFFF"
+                class="h-8 w-8 rounded-full">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g
+                  id="SVGRepo_tracerCarrier"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                  <g id="profile_x2C__person">
+                    <g>
+                      <g>
+                        <g>
+                          <path
+                            d="M16,31C7.729,31,1,24.271,1,16S7.729,1,16,1s15,6.729,15,15S24.271,31,16,31z M16,2C8.28,2,2,8.28,2,16 s6.28,14,14,14s14-6.28,14-14S23.72,2,16,2z"
+                            fill="#FFFFFF"></path>
+                        </g>
+                      </g>
+                    </g>
+                    <g>
+                      <g id="team_3_">
+                        <g>
+                          <g>
+                            <g>
+                              <g>
+                                <path
+                                  d="M23.64,20.713l-4.762-1.652l-0.323-2.584c-0.215,0.307-0.523,0.546-0.924,0.671l0.293,2.345 c0.023,0.189,0.152,0.349,0.332,0.41l5.055,1.756c0.9,0.314,1.689,1.427,1.689,2.381v-0.007c0,0.276,0.224,0.5,0.5,0.5 c0.275,0,0.499-0.223,0.5-0.498C25.997,22.656,24.94,21.168,23.64,20.713z"
+                                  fill="#FFFFFF"></path>
+                              </g>
+                            </g>
+                          </g>
+                        </g>
+                        <g>
+                          <g>
+                            <g>
+                              <g>
+                                <path
+                                  d="M6.5,24.532c-0.276,0-0.5-0.224-0.5-0.5v0.007c0-1.379,1.059-2.871,2.359-3.326l4.762-1.641 l0.012-0.28c0.034-0.274,0.289-0.465,0.559-0.434c0.273,0.034,0.468,0.284,0.434,0.559l-0.051,0.589 c-0.023,0.189-0.153,0.348-0.333,0.41l-5.054,1.742C7.789,21.973,7,23.086,7,24.039v-0.007C7,24.309,6.776,24.532,6.5,24.532 z"
+                                  fill="#FFFFFF"></path>
+                              </g>
+                            </g>
+                          </g>
+                        </g>
+                        <g>
+                          <g>
+                            <g>
+                              <g>
+                                <g>
+                                  <path
+                                    d="M16,18.039c-2.779,0-4.192-1.844-4.201-6.469c-0.002-1.174,0.123-2.363,1.227-3.469 C13.729,7.396,14.729,7.039,16,7.039s2.271,0.357,2.975,1.063c1.104,1.105,1.229,2.295,1.227,3.469 C20.192,16.195,18.779,18.039,16,18.039z M16,8.039c-1.009,0-1.75,0.252-2.267,0.769c-0.632,0.633-0.938,1.2-0.935,2.761 c0.008,4.018,1.055,5.471,3.201,5.471s3.193-1.453,3.201-5.471c0.003-1.561-0.303-2.128-0.935-2.761 C17.75,8.291,17.009,8.039,16,8.039z"
+                                    fill="#FFFFFF"></path>
+                                </g>
+                              </g>
+                            </g>
+                          </g>
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </svg>
+            </button>
+            <!-- Dropdown content (hidden by default) -->
+            <div
+              id="account-dropdown"
+              class="hidden absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg">
+              <a
+                href="#"
+                class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                >Profile</a
+              >
+              <a
+                href="#"
+                class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                >Logout</a
+              >
+            </div>
+          </div>
+        </nav>
+      </header>
+      <!-- Head Fill -->
+      <div
+        class="flex flex-col items-center md:items-start text-center md:text-left">
+        <h1 class="text-4xl font-semibold text-white">Item Sold</h1>
+        <p class="text-base text-white font-normal py-2">
+          History of your sold activities
+        </p>
+      </div>
+    </div>
+    <!-- Header -->
+    <header class="hidden">
+      <!--Navigasi-->
+      <nav class="p-4 shadow-md">
+        <div class="flex items-center justify-between">
+          <!-- Logo and Menu Items -->
+          <div class="flex items-center gap-x-2">
+            <!-- Logo -->
+            <a href="#">
+              <img
+                src="../../asset/image/logo1.png"
+                class="h-12 px-6"
+                alt="logo" />
+            </a>
+            <!-- Menu Items -->
+            <div class="flex space-x-4 p-4">
+              <a
+                href="./Input_Sold.html"
+                class="bg-orange-500 py-2 px-4 font-semibold rounded-full text-white"
+                >Item Sold</a
+              >
+              <a
+                href="./Input_Sold Out.html"
+                class="bg-slate-200 py-2 px-4 font-semibold rounded-full text-slate-500"
+                >Expensi</a
+              >
+              <a
+                href="./Input_Non_Tunai.html"
+                class="bg-slate-200 py-2 px-4 font-semibold rounded-full text-slate-500"
+                >Non Cash</a
+              >
+            </div>
+          </div>
+          <!-- Account Dropdown -->
+          <div class="relative dropdown">
+            <button class="flex items-center space-x-2">
+              <div class="flex flex-col justify-start items-end">
+                <span class="text-gray-800">Cemengbangkalan</span>
+                <span class="text-gray-500">Sidoarjo</span>
+              </div>
+
+              <img
+                src="profile.jpg"
+                alt="Profile"
+                class="h-8 w-8 rounded-full" />
+              <svg
+                class="w-4 h-4 text-gray-500"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Body -->
+    <main class="flex flex-row justify-between items-start">
+      <!-- Sidebar -->
+      <aside
+        id="default-sidebar"
+        class="hidden w-24 bg-transparent p-6 ml-6 transition-all duration-400 hover:w-48 z-50">
+        <!-- Sidebar Atas -->
+        <ul class="flex flex-col list-none h-1/3 overflow-hidden no-scrollbar">
+          <!-- Dashboard -->
+          <li>
+            <a
+              href="#"
+              class="flex items-center gap-3 text-black font-medium whitespace-nowrap py-3 transition ease-in-out">
+              <span class="material-symbols-outlined rounded-full p-2 bg-white">
+                <svg
+                  width="25px"
+                  height="25px"
+                  viewBox="0 0 15 15"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g
+                    id="SVGRepo_tracerCarrier"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M2.8 1L2.74967 0.99997C2.52122 0.999752 2.32429 0.999564 2.14983 1.04145C1.60136 1.17312 1.17312 1.60136 1.04145 2.14983C0.999564 2.32429 0.999752 2.52122 0.99997 2.74967L1 2.8V5.2L0.99997 5.25033C0.999752 5.47878 0.999564 5.67572 1.04145 5.85017C1.17312 6.39864 1.60136 6.82688 2.14983 6.95856C2.32429 7.00044 2.52122 7.00025 2.74967 7.00003L2.8 7H5.2L5.25033 7.00003C5.47878 7.00025 5.67572 7.00044 5.85017 6.95856C6.39864 6.82688 6.82688 6.39864 6.95856 5.85017C7.00044 5.67572 7.00025 5.47878 7.00003 5.25033L7 5.2V2.8L7.00003 2.74967C7.00025 2.52122 7.00044 2.32429 6.95856 2.14983C6.82688 1.60136 6.39864 1.17312 5.85017 1.04145C5.67572 0.999564 5.47878 0.999752 5.25033 0.99997L5.2 1H2.8ZM2.38328 2.01382C2.42632 2.00348 2.49222 2 2.8 2H5.2C5.50779 2 5.57369 2.00348 5.61672 2.01382C5.79955 2.05771 5.94229 2.20045 5.98619 2.38328C5.99652 2.42632 6 2.49222 6 2.8V5.2C6 5.50779 5.99652 5.57369 5.98619 5.61672C5.94229 5.79955 5.79955 5.94229 5.61672 5.98619C5.57369 5.99652 5.50779 6 5.2 6H2.8C2.49222 6 2.42632 5.99652 2.38328 5.98619C2.20045 5.94229 2.05771 5.79955 2.01382 5.61672C2.00348 5.57369 2 5.50779 2 5.2V2.8C2 2.49222 2.00348 2.42632 2.01382 2.38328C2.05771 2.20045 2.20045 2.05771 2.38328 2.01382ZM9.8 1L9.74967 0.99997C9.52122 0.999752 9.32429 0.999564 9.14983 1.04145C8.60136 1.17312 8.17312 1.60136 8.04145 2.14983C7.99956 2.32429 7.99975 2.52122 7.99997 2.74967L8 2.8V5.2L7.99997 5.25033C7.99975 5.47878 7.99956 5.67572 8.04145 5.85017C8.17312 6.39864 8.60136 6.82688 9.14983 6.95856C9.32429 7.00044 9.52122 7.00025 9.74967 7.00003L9.8 7H12.2L12.2503 7.00003C12.4788 7.00025 12.6757 7.00044 12.8502 6.95856C13.3986 6.82688 13.8269 6.39864 13.9586 5.85017C14.0004 5.67572 14.0003 5.47878 14 5.25033L14 5.2V2.8L14 2.74967C14.0003 2.52122 14.0004 2.32429 13.9586 2.14983C13.8269 1.60136 13.3986 1.17312 12.8502 1.04145C12.6757 0.999564 12.4788 0.999752 12.2503 0.99997L12.2 1H9.8ZM9.38328 2.01382C9.42632 2.00348 9.49222 2 9.8 2H12.2C12.5078 2 12.5737 2.00348 12.6167 2.01382C12.7995 2.05771 12.9423 2.20045 12.9862 2.38328C12.9965 2.42632 13 2.49222 13 2.8V5.2C13 5.50779 12.9965 5.57369 12.9862 5.61672C12.9423 5.79955 12.7995 5.94229 12.6167 5.98619C12.5737 5.99652 12.5078 6 12.2 6H9.8C9.49222 6 9.42632 5.99652 9.38328 5.98619C9.20045 5.94229 9.05771 5.79955 9.01382 5.61672C9.00348 5.57369 9 5.50779 9 5.2V2.8C9 2.49222 9.00348 2.42632 9.01382 2.38328C9.05771 2.20045 9.20045 2.05771 9.38328 2.01382ZM2.74967 7.99997L2.8 8H5.2L5.25033 7.99997C5.47878 7.99975 5.67572 7.99956 5.85017 8.04145C6.39864 8.17312 6.82688 8.60136 6.95856 9.14983C7.00044 9.32429 7.00025 9.52122 7.00003 9.74967L7 9.8V12.2L7.00003 12.2503C7.00025 12.4788 7.00044 12.6757 6.95856 12.8502C6.82688 13.3986 6.39864 13.8269 5.85017 13.9586C5.67572 14.0004 5.47878 14.0003 5.25033 14L5.2 14H2.8L2.74967 14C2.52122 14.0003 2.32429 14.0004 2.14983 13.9586C1.60136 13.8269 1.17312 13.3986 1.04145 12.8502C0.999564 12.6757 0.999752 12.4788 0.99997 12.2503L1 12.2V9.8L0.99997 9.74967C0.999752 9.52122 0.999564 9.32429 1.04145 9.14983C1.17312 8.60136 1.60136 8.17312 2.14983 8.04145C2.32429 7.99956 2.52122 7.99975 2.74967 7.99997ZM2.8 9C2.49222 9 2.42632 9.00348 2.38328 9.01382C2.20045 9.05771 2.05771 9.20045 2.01382 9.38328C2.00348 9.42632 2 9.49222 2 9.8V12.2C2 12.5078 2.00348 12.5737 2.01382 12.6167C2.05771 12.7995 2.20045 12.9423 2.38328 12.9862C2.42632 12.9965 2.49222 13 2.8 13H5.2C5.50779 13 5.57369 12.9965 5.61672 12.9862C5.79955 12.9423 5.94229 12.7995 5.98619 12.6167C5.99652 12.5737 6 12.5078 6 12.2V9.8C6 9.49222 5.99652 9.42632 5.98619 9.38328C5.94229 9.20045 5.79955 9.05771 5.61672 9.01382C5.57369 9.00348 5.50779 9 5.2 9H2.8ZM9.8 8L9.74967 7.99997C9.52122 7.99975 9.32429 7.99956 9.14983 8.04145C8.60136 8.17312 8.17312 8.60136 8.04145 9.14983C7.99956 9.32429 7.99975 9.52122 7.99997 9.74967L8 9.8V12.2L7.99997 12.2503C7.99975 12.4788 7.99956 12.6757 8.04145 12.8502C8.17312 13.3986 8.60136 13.8269 9.14983 13.9586C9.32429 14.0004 9.52122 14.0003 9.74967 14L9.8 14H12.2L12.2503 14C12.4788 14.0003 12.6757 14.0004 12.8502 13.9586C13.3986 13.8269 13.8269 13.3986 13.9586 12.8502C14.0004 12.6757 14.0003 12.4788 14 12.2503L14 12.2V9.8L14 9.74967C14.0003 9.52122 14.0004 9.32429 13.9586 9.14983C13.8269 8.60136 13.3986 8.17312 12.8502 8.04145C12.6757 7.99956 12.4788 7.99975 12.2503 7.99997L12.2 8H9.8ZM9.38328 9.01382C9.42632 9.00348 9.49222 9 9.8 9H12.2C12.5078 9 12.5737 9.00348 12.6167 9.01382C12.7995 9.05771 12.9423 9.20045 12.9862 9.38328C12.9965 9.42632 13 9.49222 13 9.8V12.2C13 12.5078 12.9965 12.5737 12.9862 12.6167C12.9423 12.7995 12.7995 12.9423 12.6167 12.9862C12.5737 12.9965 12.5078 13 12.2 13H9.8C9.49222 13 9.42632 12.9965 9.38328 12.9862C9.20045 12.9423 9.05771 12.7995 9.01382 12.6167C9.00348 12.5737 9 12.5078 9 12.2V9.8C9 9.49222 9.00348 9.42632 9.01382 9.38328C9.05771 9.20045 9.20045 9.05771 9.38328 9.01382Z"
+                      fill="#C7C7C7"></path>
+                  </g>
+                </svg>
+              </span>
+              Dashboard
+            </a>
+          </li>
+
+          <!-- Sold -->
+          <li>
+            <a
+              href="../html/Input_Sold.html"
+              class="flex items-center gap-3 text-black font-medium whitespace-nowrap py-3 transition ease-in-out hover:text-gray-800 hover:bg-transparent hover:rounded">
+              <span class="material-symbols-outlined rounded-full p-2 bg-white">
+                <svg
+                  width="25px"
+                  height="25px"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g
+                    id="SVGRepo_tracerCarrier"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <path
+                      d="M7.5 18C8.32843 18 9 18.6716 9 19.5C9 20.3284 8.32843 21 7.5 21C6.67157 21 6 20.3284 6 19.5C6 18.6716 6.67157 18 7.5 18Z"
+                      stroke="#C7C7C7"
+                      stroke-width="1.5"></path>
+                    <path
+                      d="M16.5 18.0001C17.3284 18.0001 18 18.6716 18 19.5001C18 20.3285 17.3284 21.0001 16.5 21.0001C15.6716 21.0001 15 20.3285 15 19.5001C15 18.6716 15.6716 18.0001 16.5 18.0001Z"
+                      stroke="#C7C7C7"
+                      stroke-width="1.5"></path>
+                    <path
+                      d="M2.26121 3.09184L2.50997 2.38429H2.50997L2.26121 3.09184ZM2.24876 2.29246C1.85799 2.15507 1.42984 2.36048 1.29246 2.75124C1.15507 3.14201 1.36048 3.57016 1.75124 3.70754L2.24876 2.29246ZM4.58584 4.32298L5.20507 3.89983V3.89983L4.58584 4.32298ZM5.88772 14.5862L5.34345 15.1022H5.34345L5.88772 14.5862ZM20.6578 9.88275L21.3923 10.0342L21.3933 10.0296L20.6578 9.88275ZM20.158 12.3075L20.8926 12.4589L20.158 12.3075ZM20.7345 6.69708L20.1401 7.15439L20.7345 6.69708ZM19.1336 15.0504L18.6598 14.469L19.1336 15.0504ZM5.70808 9.76V7.03836H4.20808V9.76H5.70808ZM2.50997 2.38429L2.24876 2.29246L1.75124 3.70754L2.01245 3.79938L2.50997 2.38429ZM10.9375 16.25H16.2404V14.75H10.9375V16.25ZM5.70808 7.03836C5.70808 6.3312 5.7091 5.7411 5.65719 5.26157C5.60346 4.76519 5.48705 4.31247 5.20507 3.89983L3.96661 4.74613C4.05687 4.87822 4.12657 5.05964 4.1659 5.42299C4.20706 5.8032 4.20808 6.29841 4.20808 7.03836H5.70808ZM2.01245 3.79938C2.68006 4.0341 3.11881 4.18965 3.44166 4.34806C3.74488 4.49684 3.87855 4.61727 3.96661 4.74613L5.20507 3.89983C4.92089 3.48397 4.54304 3.21763 4.10241 3.00143C3.68139 2.79485 3.14395 2.60719 2.50997 2.38429L2.01245 3.79938ZM4.20808 9.76C4.20808 11.2125 4.22171 12.2599 4.35876 13.0601C4.50508 13.9144 4.79722 14.5261 5.34345 15.1022L6.43198 14.0702C6.11182 13.7325 5.93913 13.4018 5.83723 12.8069C5.72607 12.1578 5.70808 11.249 5.70808 9.76H4.20808ZM10.9375 14.75C9.52069 14.75 8.53763 14.7482 7.79696 14.6432C7.08215 14.5418 6.70452 14.3576 6.43198 14.0702L5.34345 15.1022C5.93731 15.7286 6.69012 16.0013 7.58636 16.1283C8.45674 16.2518 9.56535 16.25 10.9375 16.25V14.75ZM4.95808 6.87H17.0888V5.37H4.95808V6.87ZM19.9232 9.73135L19.4235 12.1561L20.8926 12.4589L21.3923 10.0342L19.9232 9.73135ZM17.0888 6.87C17.9452 6.87 18.6989 6.871 19.2937 6.93749C19.5893 6.97053 19.8105 7.01643 19.9659 7.07105C20.1273 7.12776 20.153 7.17127 20.1401 7.15439L21.329 6.23978C21.094 5.93436 20.7636 5.76145 20.4632 5.65587C20.1567 5.54818 19.8101 5.48587 19.4604 5.44678C18.7646 5.369 17.9174 5.37 17.0888 5.37V6.87ZM21.3933 10.0296C21.5625 9.18167 21.7062 8.47024 21.7414 7.90038C21.7775 7.31418 21.7108 6.73617 21.329 6.23978L20.1401 7.15439C20.2021 7.23508 20.2706 7.38037 20.2442 7.80797C20.2168 8.25191 20.1002 8.84478 19.9223 9.73595L21.3933 10.0296ZM16.2404 16.25C17.0021 16.25 17.6413 16.2513 18.1566 16.1882C18.6923 16.1227 19.1809 15.9794 19.6074 15.6318L18.6598 14.469C18.5346 14.571 18.3571 14.6525 17.9744 14.6994C17.5712 14.7487 17.0397 14.75 16.2404 14.75V16.25ZM19.4235 12.1561C19.2621 12.9389 19.1535 13.4593 19.0238 13.8442C18.9007 14.2095 18.785 14.367 18.6598 14.469L19.6074 15.6318C20.0339 15.2842 20.2729 14.8346 20.4453 14.3232C20.6111 13.8312 20.7388 13.2049 20.8926 12.4589L19.4235 12.1561Z"
+                      fill="#C7C7C7"></path>
+                    <path
+                      d="M9.5 9L10.0282 12.1179"
+                      stroke="#C7C7C7"
+                      stroke-width="1.5"
+                      stroke-linecap="round"></path>
+                    <path
+                      d="M15.5283 9L15.0001 12.1179"
+                      stroke="#C7C7C7"
+                      stroke-width="1.5"
+                      stroke-linecap="round"></path>
+                  </g>
+                </svg>
+              </span>
+              Sold
+            </a>
+          </li>
+          <!-- Sales -->
+          <li>
+            <a
+              href="../html/Sales.html"
+              class="flex items-center gap-3 text-black font-medium whitespace-nowrap py-3 transition ease-in-out hover:text-gray-800 hover:bg-transparent hover:rounded">
+              <span class="material-symbols-outlined rounded-full p-2 bg-white">
+                <svg
+                  width="25px"
+                  height="25px"
+                  viewBox="0 0 16 16"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none">
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g
+                    id="SVGRepo_tracerCarrier"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <g fill="#C7C7C7">
+                      <path
+                        d="M12 2a1 1 0 011 1v10a1 1 0 11-2 0V3a1 1 0 011-1zM8 6a1 1 0 011 1v6a1 1 0 11-2 0V7a1 1 0 011-1zM5 10a1 1 0 00-2 0v3a1 1 0 102 0v-3z"></path>
+                    </g>
+                  </g>
+                </svg>
+              </span>
+              Sales
+            </a>
+          </li>
+          <!-- Waste -->
+          <li>
+            <a
+              href="../html/waste.html"
+              class="flex items-center gap-3 text-black font-medium whitespace-nowrap py-3 transition ease-in-out hover:text-gray-800 hover:bg-transparent hover:rounded">
+              <span class="material-symbols-outlined rounded-full p-2 bg-white">
+                <svg
+                  width="25px"
+                  height="25px"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g
+                    id="SVGRepo_tracerCarrier"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <path
+                      d="M20.5001 6H3.5"
+                      stroke="#C7C7C7"
+                      stroke-width="1.5"
+                      stroke-linecap="round"></path>
+                    <path
+                      d="M18.8332 8.5L18.3732 15.3991C18.1962 18.054 18.1077 19.3815 17.2427 20.1907C16.3777 21 15.0473 21 12.3865 21H11.6132C8.95235 21 7.62195 21 6.75694 20.1907C5.89194 19.3815 5.80344 18.054 5.62644 15.3991L5.1665 8.5"
+                      stroke="#C7C7C7"
+                      stroke-width="1.5"
+                      stroke-linecap="round"></path>
+                    <path
+                      d="M6.5 6C6.55588 6 6.58382 6 6.60915 5.99936C7.43259 5.97849 8.15902 5.45491 8.43922 4.68032C8.44784 4.65649 8.45667 4.62999 8.47434 4.57697L8.57143 4.28571C8.65431 4.03708 8.69575 3.91276 8.75071 3.8072C8.97001 3.38607 9.37574 3.09364 9.84461 3.01877C9.96213 3 10.0932 3 10.3553 3H13.6447C13.9068 3 14.0379 3 14.1554 3.01877C14.6243 3.09364 15.03 3.38607 15.2493 3.8072C15.3043 3.91276 15.3457 4.03708 15.4286 4.28571L15.5257 4.57697C15.5433 4.62992 15.5522 4.65651 15.5608 4.68032C15.841 5.45491 16.5674 5.97849 17.3909 5.99936C17.4162 6 17.4441 6 17.5 6"
+                      stroke="#C7C7C7"
+                      stroke-width="1.5"></path>
+                  </g>
+                </svg>
+              </span>
+              Waste
+            </a>
+          </li>
+          <!-- Stock -->
+          <li>
+            <a
+              href="../html/Stok.html"
+              class="flex items-center gap-3 text-black font-medium whitespace-nowrap py-3 transition ease-in-out hover:text-gray-800 hover:bg-transparent hover:rounded">
+              <span class="material-symbols-outlined rounded-full p-2 bg-white">
+                <svg
+                  fill="#C7C7C7"
+                  height="25px"
+                  width="25px"
+                  version="1.1"
+                  id="Layer_1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  viewBox="0 0 512 512"
+                  xml:space="preserve">
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g
+                    id="SVGRepo_tracerCarrier"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <g>
+                      <g>
+                        <path
+                          d="M489.17,409.527H94.822V92.526c0-9.205-7.463-16.668-16.668-16.668H22.829c-9.205,0-16.668,7.463-16.668,16.668 s7.463,16.668,16.668,16.668h38.655v317.001c0,9.205,7.463,16.668,16.668,16.668h22.074c-2.256,5.732-3.509,11.965-3.509,18.487 c0,27.927,22.72,50.648,50.648,50.648s50.648-22.721,50.648-50.648c0-6.523-1.253-12.756-3.509-18.487h170.338 c-2.256,5.732-3.509,11.965-3.509,18.487c0,27.927,22.72,50.648,50.648,50.648s50.649-22.721,50.649-50.648 c0-6.523-1.253-12.756-3.509-18.487h30.048c9.205,0,16.668-7.463,16.668-16.668C505.838,416.99,498.376,409.527,489.17,409.527z M147.367,478.663c-9.545,0-17.312-7.766-17.312-17.312s7.766-17.312,17.312-17.312s17.312,7.766,17.312,17.312 C164.679,470.897,156.913,478.663,147.367,478.663z M411.984,478.663c-9.545,0-17.312-7.766-17.312-17.312 s7.766-17.312,17.312-17.312s17.312,7.766,17.312,17.312C429.296,470.897,421.529,478.663,411.984,478.663z"></path>
+                      </g>
+                    </g>
+                    <g>
+                      <g>
+                        <path
+                          d="M489.17,0H166.311c-9.205,0-16.668,7.463-16.668,16.668c0,14.447,0,314.854,0,329.301c0,9.205,7.463,16.668,16.668,16.668 h322.86c9.205,0,16.668-7.463,16.668-16.668c0-14.447,0-314.854,0-329.301C505.838,7.463,498.376,0,489.17,0z M472.503,329.301 h-0.001H182.98V197.987h289.523V329.301z M472.503,164.65H182.98V33.337h289.523V164.65z"></path>
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+              </span>
+              Stock
+            </a>
+          </li>
+        </ul>
+      </aside>
+      <!-- Fill Add-->
+      <div class="container px-6 mx-auto grid">
+        <div
+          class="flex flex-col md:flex-row justify-between items-center px-4 py-4 md:py-0 space-y-4 md:space-y-0">
+          <!-- Head Fill -->
+          <div
+            class="flex-col items-center md:items-start text-center md:text-left hidden">
+            <h1 class="text-4xl font-semibold">Item Sold</h1>
+            <p class="text-base text-slate-500 font-normal py-2">
+              Riwayat sales dan aktifitas kamu
+            </p>
+          </div>
+          <!-- Form Head -->
+          <form class="flex justify-center md:justify-end w-full md:hidden">
+            <button
+              type="button"
+              id="open-pop-up"
+              class="bg-orange-500 py-3 px-8 font-semibold rounded-full text-white">
+              Add
+            </button>
+          </form>
+        </div>
+
+        <!-- Table for larger screens -->
+        <div class="hidden w-full overflow-hidden rounded-lg shadow-xs px-2">
+          <div class="w-full">
+            <table id="example" class="display" style="width: 100%">
+              <thead>
+                <tr>
+                  <th>Menu Name</th>
+                  <th>Unit</th>
+                  <th>Price</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Ayam Geprek</td>
+                  <td>PCS</td>
+                  <td>Rp. 2.000</td>
+                  <td>Edit Delete</td>
+                </tr>
+                <tr>
+                  <td>Ayam Geprek</td>
+                  <td>PCS</td>
+                  <td>Rp. 1.000</td>
+                  <td>Edit Delete</td>
+                </tr>
+                <!-- Add more rows as needed -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Cards for mobile screens -->
+        <div class="block md:hidden w-full px-2 space-y-6">
+          <!-- Full Card 1-->
+          <div class="px-2 space-y-2">
+            <h1>Senin, 21 Jun 2024</h1>
+            <!-- Card 1 -->
+            <div
+              class="bg-white flex flex-col items-center rounded-lg w-full p-4 space-x-4 card">
+              <div class="flex items-center space-x-4 cursor-pointer w-full">
+                <div class="card-header w-full flex items-center space-x-4">
+                  <div class="text-red-500">
+                    <!-- Placeholder for an icon -->
+                    <svg
+                      width="15px"
+                      height="15px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M8 1.5V2.5H3C2.44772 2.5 2 2.94772 2 3.5V4.5C2 5.05228 2.44772 5.5 3 5.5H21C21.5523 5.5 22 5.05228 22 4.5V3.5C22 2.94772 21.5523 2.5 21 2.5H16V1.5C16 0.947715 15.5523 0.5 15 0.5H9C8.44772 0.5 8 0.947715 8 1.5Z"
+                        fill="#E71D36"></path>
+                      <path
+                        d="M3.9231 7.5H20.0767L19.1344 20.2216C19.0183 21.7882 17.7135 23 16.1426 23H7.85724C6.28636 23 4.98148 21.7882 4.86544 20.2216L3.9231 7.5Z"
+                        fill="#E71D36"></path>
+                    </svg>
+                  </div>
+                  <div class="flex-grow">
+                    <span class="font-semibold">Geprek Jumbo</span>
+                    <div class="text-gray-500 text-sm">
+                      CU : 1232 - Shopeepay
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="text-gray-500">
+                    <button
+                      id="dropdownMenuIconHorizontalButton1"
+                      data-dropdown-toggle="dropdownDotsHorizontal1"
+                      class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none z-50"
+                      type="button">
+                      <svg
+                        class="w-5 h-5"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor"
+                        viewBox="0 0 16 3">
+                        <path
+                          d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
+                      </svg>
+                    </button>
+                    <!-- Dropdown menu -->
+                    <div
+                      id="dropdownDotsHorizontal1"
+                      class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
+                      <ul
+                        class="py-2 text-sm text-gray-700"
+                        aria-labelledby="dropdownMenuIconHorizontalButton1">
+                        <li>
+                          <a href="#" class="block px-4 py-2 hover:bg-gray-100"
+                            >Edit</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                            >Delete</a
+                          >
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="border-t border-black w-full hidden card-line"></div>
+              <div class="p-4 space-y-2 slide-down hidden w-full card-detail">
+                <div class="flex justify-between">
+                  <span>Item Name</span><span>Geprek Jumbo</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Price</span><span>1231</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>CU</span><span>Pcs</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Menu Variant</span><span>1</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Shift</span><span>1</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Date</span><span>1</span>
+                </div>
+              </div>
+            </div>
+            <!-- Card 2 -->
+            <div
+              class="bg-white flex flex-col items-center rounded-lg w-full p-4 space-x-4 card">
+              <div class="flex items-center space-x-4 cursor-pointer w-full">
+                <div class="card-header w-full flex items-center space-x-4">
+                  <div class="text-red-500">
+                    <!-- Placeholder for an icon -->
+                    <svg
+                      width="15px"
+                      height="15px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M8 1.5V2.5H3C2.44772 2.5 2 2.94772 2 3.5V4.5C2 5.05228 2.44772 5.5 3 5.5H21C21.5523 5.5 22 5.05228 22 4.5V3.5C22 2.94772 21.5523 2.5 21 2.5H16V1.5C16 0.947715 15.5523 0.5 15 0.5H9C8.44772 0.5 8 0.947715 8 1.5Z"
+                        fill="#E71D36"></path>
+                      <path
+                        d="M3.9231 7.5H20.0767L19.1344 20.2216C19.0183 21.7882 17.7135 23 16.1426 23H7.85724C6.28636 23 4.98148 21.7882 4.86544 20.2216L3.9231 7.5Z"
+                        fill="#E71D36"></path>
+                    </svg>
+                  </div>
+                  <div class="flex-grow">
+                    <span class="font-semibold">Geprek Jumbo</span>
+                    <div class="text-gray-500 text-sm">
+                      CU : 1232 - Shopeepay
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="text-gray-500">
+                    <button
+                      id="dropdownMenuIconHorizontalButton2"
+                      data-dropdown-toggle="dropdownDotsHorizontal2"
+                      class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none z-50"
+                      type="button">
+                      <svg
+                        class="w-5 h-5"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor"
+                        viewBox="0 0 16 3">
+                        <path
+                          d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
+                      </svg>
+                    </button>
+                    <!-- Dropdown menu -->
+                    <div
+                      id="dropdownDotsHorizontal2"
+                      class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
+                      <ul
+                        class="py-2 text-sm text-gray-700"
+                        aria-labelledby="dropdownMenuIconHorizontalButton2">
+                        <li>
+                          <a href="#" class="block px-4 py-2 hover:bg-gray-100"
+                            >Edit</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                            >Delete</a
+                          >
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="border-t border-black w-full hidden card-line"></div>
+              <div class="p-4 space-y-2 slide-down hidden w-full card-detail">
+                <div class="flex justify-between">
+                  <span>Item Name</span><span>Geprek Jumbo</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Price</span><span>1231</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>CU</span><span>Pcs</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Menu Variant</span><span>1</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Shift</span><span>1</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Date</span><span>1</span>
+                </div>
+              </div>
+            </div>
+            <!-- Card 3 -->
+            <div
+              class="bg-white flex flex-col items-center rounded-lg w-full p-4 space-x-4 card">
+              <div class="flex items-center space-x-4 cursor-pointer w-full">
+                <div class="card-header w-full flex items-center space-x-4">
+                  <div class="text-red-500">
+                    <!-- Placeholder for an icon -->
+                    <svg
+                      width="15px"
+                      height="15px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M8 1.5V2.5H3C2.44772 2.5 2 2.94772 2 3.5V4.5C2 5.05228 2.44772 5.5 3 5.5H21C21.5523 5.5 22 5.05228 22 4.5V3.5C22 2.94772 21.5523 2.5 21 2.5H16V1.5C16 0.947715 15.5523 0.5 15 0.5H9C8.44772 0.5 8 0.947715 8 1.5Z"
+                        fill="#E71D36"></path>
+                      <path
+                        d="M3.9231 7.5H20.0767L19.1344 20.2216C19.0183 21.7882 17.7135 23 16.1426 23H7.85724C6.28636 23 4.98148 21.7882 4.86544 20.2216L3.9231 7.5Z"
+                        fill="#E71D36"></path>
+                    </svg>
+                  </div>
+                  <div class="flex-grow">
+                    <span class="font-semibold">Geprek Jumbo</span>
+                    <div class="text-gray-500 text-sm">
+                      CU : 1232 - Shopeepay
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="text-gray-500">
+                    <button
+                      id="dropdownMenuIconHorizontalButton3"
+                      data-dropdown-toggle="dropdownDotsHorizontal3"
+                      class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none z-50"
+                      type="button">
+                      <svg
+                        class="w-5 h-5"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor"
+                        viewBox="0 0 16 3">
+                        <path
+                          d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
+                      </svg>
+                    </button>
+                    <!-- Dropdown menu -->
+                    <div
+                      id="dropdownDotsHorizontal3"
+                      class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
+                      <ul
+                        class="py-2 text-sm text-gray-700"
+                        aria-labelledby="dropdownMenuIconHorizontalButton2">
+                        <li>
+                          <a href="#" class="block px-4 py-2 hover:bg-gray-100"
+                            >Edit</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                            >Delete</a
+                          >
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="border-t border-black w-full hidden card-line"></div>
+              <div class="p-4 space-y-2 slide-down hidden w-full card-detail">
+                <div class="flex justify-between">
+                  <span>Item Name</span><span>Geprek Jumbo</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Price</span><span>1231</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>CU</span><span>Pcs</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Menu Variant</span><span>1</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Shift</span><span>1</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Date</span><span>1</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Full Card 1-->
+          <div class="px-2 space-y-2">
+            <h1>Senin, 21 Jun 2024</h1>
+            <!-- Card 1 -->
+            <div
+              class="bg-white flex flex-col items-center rounded-lg w-full p-4 space-x-4 card">
+              <div class="flex items-center space-x-4 cursor-pointer w-full">
+                <div class="card-header w-full flex items-center space-x-4">
+                  <div class="text-red-500">
+                    <!-- Placeholder for an icon -->
+                    <svg
+                      width="15px"
+                      height="15px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M8 1.5V2.5H3C2.44772 2.5 2 2.94772 2 3.5V4.5C2 5.05228 2.44772 5.5 3 5.5H21C21.5523 5.5 22 5.05228 22 4.5V3.5C22 2.94772 21.5523 2.5 21 2.5H16V1.5C16 0.947715 15.5523 0.5 15 0.5H9C8.44772 0.5 8 0.947715 8 1.5Z"
+                        fill="#E71D36"></path>
+                      <path
+                        d="M3.9231 7.5H20.0767L19.1344 20.2216C19.0183 21.7882 17.7135 23 16.1426 23H7.85724C6.28636 23 4.98148 21.7882 4.86544 20.2216L3.9231 7.5Z"
+                        fill="#E71D36"></path>
+                    </svg>
+                  </div>
+                  <div class="flex-grow">
+                    <span class="font-semibold">Geprek Jumbo</span>
+                    <div class="text-gray-500 text-sm">
+                      CU : 1232 - Shopeepay
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="text-gray-500">
+                    <button
+                      id="dropdownMenuIconHorizontalButton4"
+                      data-dropdown-toggle="dropdownDotsHorizontal4"
+                      class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none z-50"
+                      type="button">
+                      <svg
+                        class="w-5 h-5"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor"
+                        viewBox="0 0 16 3">
+                        <path
+                          d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
+                      </svg>
+                    </button>
+                    <!-- Dropdown menu -->
+                    <div
+                      id="dropdownDotsHorizontal4"
+                      class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
+                      <ul
+                        class="py-2 text-sm text-gray-700"
+                        aria-labelledby="dropdownMenuIconHorizontalButton4">
+                        <li>
+                          <a href="#" class="block px-4 py-2 hover:bg-gray-100"
+                            >Edit</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                            >Delete</a
+                          >
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="border-t border-black w-full hidden card-line"></div>
+              <div class="p-4 space-y-2 slide-down hidden w-full card-detail">
+                <div class="flex justify-between">
+                  <span>Item Name</span><span>Geprek Jumbo</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Price</span><span>1231</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>CU</span><span>Pcs</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Menu Variant</span><span>1</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Shift</span><span>1</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Date</span><span>1</span>
+                </div>
+              </div>
+            </div>
+            <!-- Card 2 -->
+            <div
+              class="bg-white flex flex-col items-center rounded-lg w-full p-4 space-x-4 card">
+              <div class="flex items-center space-x-4 cursor-pointer w-full">
+                <div class="card-header w-full flex items-center space-x-4">
+                  <div class="text-red-500">
+                    <!-- Placeholder for an icon -->
+                    <svg
+                      width="15px"
+                      height="15px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M8 1.5V2.5H3C2.44772 2.5 2 2.94772 2 3.5V4.5C2 5.05228 2.44772 5.5 3 5.5H21C21.5523 5.5 22 5.05228 22 4.5V3.5C22 2.94772 21.5523 2.5 21 2.5H16V1.5C16 0.947715 15.5523 0.5 15 0.5H9C8.44772 0.5 8 0.947715 8 1.5Z"
+                        fill="#E71D36"></path>
+                      <path
+                        d="M3.9231 7.5H20.0767L19.1344 20.2216C19.0183 21.7882 17.7135 23 16.1426 23H7.85724C6.28636 23 4.98148 21.7882 4.86544 20.2216L3.9231 7.5Z"
+                        fill="#E71D36"></path>
+                    </svg>
+                  </div>
+                  <div class="flex-grow">
+                    <span class="font-semibold">Geprek Jumbo</span>
+                    <div class="text-gray-500 text-sm">
+                      CU : 1232 - Shopeepay
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="text-gray-500">
+                    <button
+                      id="dropdownMenuIconHorizontalButton5"
+                      data-dropdown-toggle="dropdownDotsHorizontal5"
+                      class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none z-50"
+                      type="button">
+                      <svg
+                        class="w-5 h-5"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor"
+                        viewBox="0 0 16 3">
+                        <path
+                          d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
+                      </svg>
+                    </button>
+                    <!-- Dropdown menu -->
+                    <div
+                      id="dropdownDotsHorizontal5"
+                      class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
+                      <ul
+                        class="py-2 text-sm text-gray-700"
+                        aria-labelledby="dropdownMenuIconHorizontalButton5">
+                        <li>
+                          <a href="#" class="block px-4 py-2 hover:bg-gray-100"
+                            >Edit</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                            >Delete</a
+                          >
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="border-t border-black w-full hidden card-line"></div>
+              <div class="p-4 space-y-2 slide-down hidden w-full card-detail">
+                <div class="flex justify-between">
+                  <span>Item Name</span><span>Geprek Jumbo</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Price</span><span>1231</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>CU</span><span>Pcs</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Menu Variant</span><span>1</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Shift</span><span>1</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Date</span><span>1</span>
+                </div>
+              </div>
+            </div>
+            <!-- Card 3 -->
+            <div
+              class="bg-white flex flex-col items-center rounded-lg w-full p-4 space-x-4 card">
+              <div class="flex items-center space-x-4 cursor-pointer w-full">
+                <div class="card-header w-full flex items-center space-x-4">
+                  <div class="text-red-500">
+                    <!-- Placeholder for an icon -->
+                    <svg
+                      width="15px"
+                      height="15px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M8 1.5V2.5H3C2.44772 2.5 2 2.94772 2 3.5V4.5C2 5.05228 2.44772 5.5 3 5.5H21C21.5523 5.5 22 5.05228 22 4.5V3.5C22 2.94772 21.5523 2.5 21 2.5H16V1.5C16 0.947715 15.5523 0.5 15 0.5H9C8.44772 0.5 8 0.947715 8 1.5Z"
+                        fill="#E71D36"></path>
+                      <path
+                        d="M3.9231 7.5H20.0767L19.1344 20.2216C19.0183 21.7882 17.7135 23 16.1426 23H7.85724C6.28636 23 4.98148 21.7882 4.86544 20.2216L3.9231 7.5Z"
+                        fill="#E71D36"></path>
+                    </svg>
+                  </div>
+                  <div class="flex-grow">
+                    <span class="font-semibold">Geprek Jumbo</span>
+                    <div class="text-gray-500 text-sm">
+                      CU : 1232 - Shopeepay
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="text-gray-500">
+                    <button
+                      id="dropdownMenuIconHorizontalButton6"
+                      data-dropdown-toggle="dropdownDotsHorizontal6"
+                      class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none z-50"
+                      type="button">
+                      <svg
+                        class="w-5 h-5"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor"
+                        viewBox="0 0 16 3">
+                        <path
+                          d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
+                      </svg>
+                    </button>
+                    <!-- Dropdown menu -->
+                    <div
+                      id="dropdownDotsHorizontal6"
+                      class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
+                      <ul
+                        class="py-2 text-sm text-gray-700"
+                        aria-labelledby="dropdownMenuIconHorizontalButton6">
+                        <li>
+                          <a href="#" class="block px-4 py-2 hover:bg-gray-100"
+                            >Edit</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                            >Delete</a
+                          >
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="border-t border-black w-full hidden card-line"></div>
+              <div class="p-4 space-y-2 slide-down hidden w-full card-detail">
+                <div class="flex justify-between">
+                  <span>Item Name</span><span>Geprek Jumbo</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Price</span><span>1231</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>CU</span><span>Pcs</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Menu Variant</span><span>1</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Shift</span><span>1</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Date</span><span>1</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Modal -->
+    <div
+      id="confirmation-modal"
+      class="fixed inset-0 flex items-end justify-end z-50 h-full hidden overflow-hidden">
+      <div class="bg-black bg-opacity-50 absolute inset-0"></div>
+      <div
+        class="bg-bg1 rounded-lg p-8 z-10 relative h-full w-full md:w-3/4 lg:w-1/2 mx-4 flex flex-col gap-4 overflow-y-auto">
+        <!-- Add Input Sold -->
+        <div class="flex flex-row justify-between items-start">
+          <h2 class="text-2xl font-semibold">Input Sold</h2>
+          <button
+            id="close-button"
+            class="relative text-gray-600 hover:text-gray-900">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <!-- Add Form Input Sold -->
+        <div
+          class="rounded-lg bg-white h-auto w-full p-4 overflow-y-vis"
+          id="formMenu">
+          <div class="flex flex-col justify-between items-start w-full gap-4">
+            <div class="flex justify-start gap-4 w-full">
+              <form class="mx-auto w-full">
+                <label
+                  for="item-name"
+                  class="block mb-2 text-sm font-medium text-gray-900"
+                  >Item Name</label
+                >
+                <select
+                  id="item-name"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                  <option selected>Item to choose</option>
+                  <option value="Item1">Ayam Geprek</option>
+                  <option value="Item2">Mie Goreng</option>
+                  <option value="Item3">Sambal Rica</option>
+                  <option value="Item4">Ayam Crispy</option>
+                </select>
+              </form>
+              <form class="mx-auto w-full">
+                <label
+                  for="Price"
+                  class="block mb-2 text-sm font-medium text-gray-900"
+                  >Price</label
+                >
+                <input
+                  type="number"
+                  id="Price"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  placeholder="1000"
+                  required />
+              </form>
+            </div>
+            <div class="flex justify-start gap-4 w-full">
+              <form class="mx-auto w-full">
+                <label
+                  for="CU"
+                  class="block mb-2 text-sm font-medium text-gray-900"
+                  >CU</label
+                >
+                <input
+                  type="number"
+                  id="CU"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  placeholder="1234"
+                  required />
+              </form>
+              <form class="mx-auto w-full">
+                <label
+                  for="variant-menu"
+                  class="block mb-2 text-sm font-medium text-gray-900"
+                  >Variant Menu</label
+                >
+                <select
+                  id="variant-menu"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                  <option selected>Variant menu to choose</option>
+                  <option value="US">United States</option>
+                  <option value="CA">Canada</option>
+                  <option value="FR">France</option>
+                  <option value="DE">Germany</option>
+                </select>
+              </form>
+            </div>
+            <div class="flex justify-start gap-4 w-full">
+              <form class="mx-auto w-full">
+                <div class="relative max-w-sm">
+                  <label
+                    for="datepicker-autohide"
+                    class="block mb-2 text-sm font-medium text-gray-900"
+                    >Date</label
+                  >
+                  <div
+                    class="absolute mt-6 inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                    <svg
+                      class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="currentColor"
+                      viewBox="0 0 20 20">
+                      <path
+                        d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                    </svg>
+                  </div>
+                  <input
+                    id="datepicker-autohide"
+                    datepicker
+                    datepicker-autohide
+                    type="text"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"
+                    placeholder="Select date" />
+                </div>
+              </form>
+              <form class="mx-auto w-full">
+                <label
+                  for="shift"
+                  class="block mb-2 text-sm font-medium text-gray-900"
+                  >Shift</label
+                >
+                <select
+                  id="shift"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                  <option selected>Shift to choose</option>
+                  <option value="US">United States</option>
+                  <option value="CA">Canada</option>
+                  <option value="FR">France</option>
+                  <option value="DE">Germany</option>
+                </select>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Add Button Input Sold -->
+        <div class="mt-4">
+          <button id="paket-new" class="flex flex-row items-center">
+            <svg
+              width="25px"
+              height="25px"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M6 12H18"
+                stroke="#F97013"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"></path>
+              <path
+                d="M12 18V6"
+                stroke="#F97013"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"></path>
+            </svg>
+            <p class="text-sm font-normal font-pop text-[#F97013] ml-2">
+              Tambah Item Sold
+            </p>
+          </button>
+        </div>
+
+        <!-- Container new form -->
+        <div id="form-container"></div>
+
+        <!-- Button Send dan Cancel -->
+        <div class="pt-28 flex justify-center items-end md:justify-end">
+          <div class="flex flex-row items-end gap-6">
+            <button
+              id="cancel-button"
+              class="bg-white py-3 px-8 font-semibold rounded-full text-orange-500 border-orange-500 border-[1px]">
+              <p>Batal</p>
+            </button>
+            <button
+              class="bg-orange-500 py-3 px-8 font-semibold rounded-full text-white">
+              Kirim
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
+    <script src="../../js/Hamburger.js"></script>
+    <script src="../../js/Card.js"></script>
+    <script src="../../js/Sold1.js"></script>
+    <script src="../../js/Sold4.js"></script>
+    <script src="../../js/Sold5.js"></script>
+  </body>
+</html>

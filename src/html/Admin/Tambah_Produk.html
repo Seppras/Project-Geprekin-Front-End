@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Product</title>
+    <link rel="stylesheet" href="../../css/output.css" />
+    <!-- alpine -->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- jquery -->
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"></script>
+    <!-- datatable -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/2.0.8/css/dataTables.tailwindcss.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.tailwindcss.js"></script>
+    <link href="../../css/output.css" rel="stylesheet" />
+    <style>
+      .modal-active {
+        display: flex;
+      }
+      .no-scroll {
+        overflow: hidden;
+      }
+      .package-container {
+        margin-top: 20px; /* Anda dapat mengubah nilai ini sesuai kebutuhan */
+      }
+    </style>
+  </head>
+  <body class="bg-bg1">
+    <!-- Header -->
+    <header>
+      <!-- Navigasi -->
+      <nav class="p-4 shadow-md">
+        <div class="flex items-center justify-between">
+          <!-- Logo and Menu Items -->
+          <div class="flex items-center gap-x-2">
+            <!-- Logo -->
+            <a href="#">
+              <img
+                src="../../asset/image/logo1.png"
+                class="h-12 px-6"
+                alt="logo" />
+            </a>
+            <!-- Menu Items -->
+            <div class="flex space-x-4 p-4">
+              <a
+                href="#"
+                class="bg-orange-500 py-2 px-4 font-semibold rounded-full text-white"
+                >Add Product</a
+              >
+              <a
+                href="../../html/Admin/Tambah_Menu.html"
+                class="bg-slate-200 py-2 px-4 font-semibold rounded-full text-slate-500"
+                >Add Menu</a
+              >
+              <a
+                href="../../html/Admin/Tambah_Outlet.html"
+                class="bg-slate-200 py-2 px-4 font-semibold rounded-full text-slate-500"
+                >Add Outlet</a
+              >
+            </div>
+          </div>
+          <!-- Account Dropdown -->
+          <div class="relative dropdown">
+            <button class="flex items-center space-x-2">
+              <div class="flex flex-col justify-start items-end">
+                <span class="text-gray-800">Cemengbangkalan</span>
+                <span class="text-gray-500">Sidoarjo</span>
+              </div>
+
+              <img
+                src="profile.jpg"
+                alt="Profile"
+                class="h-8 w-8 rounded-full" />
+              <svg
+                class="w-4 h-4 text-gray-500"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <!-- Body -->
+    <main class="flex flex-row justify-between items-start">
+      <!-- Sidebar -->
+      <aside
+        class="block w-24 bg-transparent p-6 ml-6 transition-all duration-400 hover:w-48 z-50">
+        <!-- Sidebar Atas -->
+        <ul class="flex flex-col list-none h-1/3 overflow-hidden no-scrollbar">
+          <!-- Dashboard -->
+          <li>
+            <a
+              href="dsb.html"
+              class="flex items-center gap-3 text-black font-medium whitespace-nowrap py-3 transition ease-in-out">
+              <span class="material-symbols-outlined rounded-full p-2 bg-white">
+                <svg
+                  width="25px"
+                  height="25px"
+                  viewBox="0 0 15 15"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g
+                    id="SVGRepo_tracerCarrier"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M2.8 1L2.74967 0.99997C2.52122 0.999752 2.32429 0.999564 2.14983 1.04145C1.60136 1.17312 1.17312 1.60136 1.04145 2.14983C0.999564 2.32429 0.999752 2.52122 0.99997 2.74967L1 2.8V5.2L0.99997 5.25033C0.999752 5.47878 0.999564 5.67572 1.04145 5.85017C1.17312 6.39864 1.60136 6.82688 2.14983 6.95856C2.32429 7.00044 2.52122 7.00025 2.74967 7.00003L2.8 7H5.2L5.25033 7.00003C5.47878 7.00025 5.67572 7.00044 5.85017 6.95856C6.39864 6.82688 6.82688 6.39864 6.95856 5.85017C7.00044 5.67572 7.00025 5.47878 7.00003 5.25033L7 5.2V2.8L7.00003 2.74967C7.00025 2.52122 7.00044 2.32429 6.95856 2.14983C6.82688 1.60136 6.39864 1.17312 5.85017 1.04145C5.67572 0.999564 5.47878 0.999752 5.25033 0.99997L5.2 1H2.8ZM2.38328 2.01382C2.42632 2.00348 2.49222 2 2.8 2H5.2C5.50779 2 5.57369 2.00348 5.61672 2.01382C5.79955 2.05771 5.94229 2.20045 5.98619 2.38328C5.99652 2.42632 6 2.49222 6 2.8V5.2C6 5.50779 5.99652 5.57369 5.98619 5.61672C5.94229 5.79955 5.79955 5.94229 5.61672 5.98619C5.57369 5.99652 5.50779 6 5.2 6H2.8C2.49222 6 2.42632 5.99652 2.38328 5.98619C2.20045 5.94229 2.05771 5.79955 2.01382 5.61672C2.00348 5.57369 2 5.50779 2 5.2V2.8C2 2.49222 2.00348 2.42632 2.01382 2.38328C2.05771 2.20045 2.20045 2.05771 2.38328 2.01382ZM9.8 1L9.74967 0.99997C9.52122 0.999752 9.32429 0.999564 9.14983 1.04145C8.60136 1.17312 8.17312 1.60136 8.04145 2.14983C7.99956 2.32429 7.99975 2.52122 7.99997 2.74967L8 2.8V5.2L7.99997 5.25033C7.99975 5.47878 7.99956 5.67572 8.04145 5.85017C8.17312 6.39864 8.60136 6.82688 9.14983 6.95856C9.32429 7.00044 9.52122 7.00025 9.74967 7.00003L9.8 7H12.2L12.2503 7.00003C12.4788 7.00025 12.6757 7.00044 12.8502 6.95856C13.3986 6.82688 13.8269 6.39864 13.9586 5.85017C14.0004 5.67572 14.0003 5.47878 14 5.25033L14 5.2V2.8L14 2.74967C14.0003 2.52122 14.0004 2.32429 13.9586 2.14983C13.8269 1.60136 13.3986 1.17312 12.8502 1.04145C12.6757 0.999564 12.4788 0.999752 12.2503 0.99997L12.2 1H9.8ZM9.38328 2.01382C9.42632 2.00348 9.49222 2 9.8 2H12.2C12.5078 2 12.5737 2.00348 12.6167 2.01382C12.7995 2.05771 12.9423 2.20045 12.9862 2.38328C12.9965 2.42632 13 2.49222 13 2.8V5.2C13 5.50779 12.9965 5.57369 12.9862 5.61672C12.9423 5.79955 12.7995 5.94229 12.6167 5.98619C12.5737 5.99652 12.5078 6 12.2 6H9.8C9.49222 6 9.42632 5.99652 9.38328 5.98619C9.20045 5.94229 9.05771 5.79955 9.01382 5.61672C9.00348 5.57369 9 5.50779 9 5.2V2.8C9 2.49222 9.00348 2.42632 9.01382 2.38328C9.05771 2.20045 9.20045 2.05771 9.38328 2.01382ZM2.74967 7.99997L2.8 8H5.2L5.25033 7.99997C5.47878 7.99975 5.67572 7.99956 5.85017 8.04145C6.39864 8.17312 6.82688 8.60136 6.95856 9.14983C7.00044 9.32429 7.00025 9.52122 7.00003 9.74967L7 9.8V12.2L7.00003 12.2503C7.00025 12.4788 7.00044 12.6757 6.95856 12.8502C6.82688 13.3986 6.39864 13.8269 5.85017 13.9586C5.67572 14.0004 5.47878 14.0003 5.25033 14L5.2 14H2.8L2.74967 14C2.52122 14.0003 2.32429 14.0004 2.14983 13.9586C1.60136 13.8269 1.17312 13.3986 1.04145 12.8502C0.999564 12.6757 0.999752 12.4788 0.99997 12.2503L1 12.2V9.8L0.99997 9.74967C0.999752 9.52122 0.999564 9.32429 1.04145 9.14983C1.17312 8.60136 1.60136 8.17312 2.14983 8.04145C2.32429 7.99956 2.52122 7.99975 2.74967 7.99997ZM2.8 9C2.49222 9 2.42632 9.00348 2.38328 9.01382C2.20045 9.05771 2.05771 9.20045 2.01382 9.38328C2.00348 9.42632 2 9.49222 2 9.8V12.2C2 12.5078 2.00348 12.5737 2.01382 12.6167C2.05771 12.7995 2.20045 12.9423 2.38328 12.9862C2.42632 12.9965 2.49222 13 2.8 13H5.2C5.50779 13 5.57369 12.9965 5.61672 12.9862C5.79955 12.9423 5.94229 12.7995 5.98619 12.6167C5.99652 12.5737 6 12.5078 6 12.2V9.8C6 9.49222 5.99652 9.42632 5.98619 9.38328C5.94229 9.20045 5.79955 9.05771 5.61672 9.01382C5.57369 9.00348 5.50779 9 5.2 9H2.8ZM9.8 8L9.74967 7.99997C9.52122 7.99975 9.32429 7.99956 9.14983 8.04145C8.60136 8.17312 8.17312 8.60136 8.04145 9.14983C7.99956 9.32429 7.99975 9.52122 7.99997 9.74967L8 9.8V12.2L7.99997 12.2503C7.99975 12.4788 7.99956 12.6757 8.04145 12.8502C8.17312 13.3986 8.60136 13.8269 9.14983 13.9586C9.32429 14.0004 9.52122 14.0003 9.74967 14L9.8 14H12.2L12.2503 14C12.4788 14.0003 12.6757 14.0004 12.8502 13.9586C13.3986 13.8269 13.8269 13.3986 13.9586 12.8502C14.0004 12.6757 14.0003 12.4788 14 12.2503L14 12.2V9.8L14 9.74967C14.0003 9.52122 14.0004 9.32429 13.9586 9.14983C13.8269 8.60136 13.3986 8.17312 12.8502 8.04145C12.6757 7.99956 12.4788 7.99975 12.2503 7.99997L12.2 8H9.8ZM9.38328 9.01382C9.42632 9.00348 9.49222 9 9.8 9H12.2C12.5078 9 12.5737 9.00348 12.6167 9.01382C12.7995 9.05771 12.9423 9.20045 12.9862 9.38328C12.9965 9.42632 13 9.49222 13 9.8V12.2C13 12.5078 12.9965 12.5737 12.9862 12.6167C12.9423 12.7995 12.7995 12.9423 12.6167 12.9862C12.5737 12.9965 12.5078 13 12.2 13H9.8C9.49222 13 9.42632 12.9965 9.38328 12.9862C9.20045 12.9423 9.05771 12.7995 9.01382 12.6167C9.00348 12.5737 9 12.5078 9 12.2V9.8C9 9.49222 9.00348 9.42632 9.01382 9.38328C9.05771 9.20045 9.20045 9.05771 9.38328 9.01382Z"
+                      fill="#C7C7C7"></path>
+                  </g>
+                </svg>
+              </span>
+              Dashboard
+            </a>
+          </li>
+          <!-- Master -->
+          <li>
+            <a
+              href="../../html/Admin/Master_Material.html"
+              class="flex items-center gap-3 text-black font-medium whitespace-nowrap py-3 transition ease-in-out">
+              <span class="material-symbols-outlined rounded-full p-2 bg-white">
+                <svg
+                  width="25px"
+                  height="25px"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g
+                    id="SVGRepo_tracerCarrier"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <path
+                      d="M15.3929 4.05365L14.8912 4.61112L15.3929 4.05365ZM19.3517 7.61654L18.85 8.17402L19.3517 7.61654ZM21.654 10.1541L20.9689 10.4592V10.4592L21.654 10.1541ZM3.17157 20.8284L3.7019 20.2981H3.7019L3.17157 20.8284ZM20.8284 20.8284L20.2981 20.2981L20.2981 20.2981L20.8284 20.8284ZM14 21.25H10V22.75H14V21.25ZM2.75 14V10H1.25V14H2.75ZM21.25 13.5629V14H22.75V13.5629H21.25ZM14.8912 4.61112L18.85 8.17402L19.8534 7.05907L15.8947 3.49618L14.8912 4.61112ZM22.75 13.5629C22.75 11.8745 22.7651 10.8055 22.3391 9.84897L20.9689 10.4592C21.2349 11.0565 21.25 11.742 21.25 13.5629H22.75ZM18.85 8.17402C20.2034 9.3921 20.7029 9.86199 20.9689 10.4592L22.3391 9.84897C21.9131 8.89241 21.1084 8.18853 19.8534 7.05907L18.85 8.17402ZM10.0298 2.75C11.6116 2.75 12.2085 2.76158 12.7405 2.96573L13.2779 1.5653C12.4261 1.23842 11.498 1.25 10.0298 1.25V2.75ZM15.8947 3.49618C14.8087 2.51878 14.1297 1.89214 13.2779 1.5653L12.7405 2.96573C13.2727 3.16993 13.7215 3.55836 14.8912 4.61112L15.8947 3.49618ZM10 21.25C8.09318 21.25 6.73851 21.2484 5.71085 21.1102C4.70476 20.975 4.12511 20.7213 3.7019 20.2981L2.64124 21.3588C3.38961 22.1071 4.33855 22.4392 5.51098 22.5969C6.66182 22.7516 8.13558 22.75 10 22.75V21.25ZM1.25 14C1.25 15.8644 1.24841 17.3382 1.40313 18.489C1.56076 19.6614 1.89288 20.6104 2.64124 21.3588L3.7019 20.2981C3.27869 19.8749 3.02502 19.2952 2.88976 18.2892C2.75159 17.2615 2.75 15.9068 2.75 14H1.25ZM14 22.75C15.8644 22.75 17.3382 22.7516 18.489 22.5969C19.6614 22.4392 20.6104 22.1071 21.3588 21.3588L20.2981 20.2981C19.8749 20.7213 19.2952 20.975 18.2892 21.1102C17.2615 21.2484 15.9068 21.25 14 21.25V22.75ZM21.25 14C21.25 15.9068 21.2484 17.2615 21.1102 18.2892C20.975 19.2952 20.7213 19.8749 20.2981 20.2981L21.3588 21.3588C22.1071 20.6104 22.4392 19.6614 22.5969 18.489C22.7516 17.3382 22.75 15.8644 22.75 14H21.25ZM2.75 10C2.75 8.09318 2.75159 6.73851 2.88976 5.71085C3.02502 4.70476 3.27869 4.12511 3.7019 3.7019L2.64124 2.64124C1.89288 3.38961 1.56076 4.33855 1.40313 5.51098C1.24841 6.66182 1.25 8.13558 1.25 10H2.75ZM10.0298 1.25C8.15538 1.25 6.67442 1.24842 5.51887 1.40307C4.34232 1.56054 3.39019 1.8923 2.64124 2.64124L3.7019 3.7019C4.12453 3.27928 4.70596 3.02525 5.71785 2.88982C6.75075 2.75158 8.11311 2.75 10.0298 2.75V1.25Z"
+                      fill="#C7C7C7"></path>
+                    <path
+                      d="M13 2.5V5C13 7.35702 13 8.53553 13.7322 9.26777C14.4645 10 15.643 10 18 10H22"
+                      stroke="#C7C7C7"
+                      stroke-width="1.5"></path>
+                  </g>
+                </svg>
+              </span>
+              Master
+            </a>
+          </li>
+          <!-- Tambah -->
+          <li>
+            <a
+              href="../../html/Admin/Tambah_Produk.html"
+              class="flex items-center gap-3 text-black font-medium whitespace-nowrap py-3 transition ease-in-out">
+              <span class="rounded-full p-2 bg-orange-500">
+                <svg
+                  width="25px"
+                  height="25px"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g
+                    id="SVGRepo_tracerCarrier"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <path
+                      d="M4 12H20M12 4V20"
+                      stroke="#ffffff"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"></path>
+                  </g></svg
+              ></span>
+              Add
+            </a>
+          </li>
+          <!-- Sold -->
+          <li>
+            <a
+              href="../../html/Admin/Input_Sold.html"
+              class="flex items-center gap-3 text-black font-medium whitespace-nowrap py-3 transition ease-in-out hover:text-gray-800 hover:bg-transparent hover:rounded">
+              <span class="material-symbols-outlined rounded-full p-2 bg-white">
+                <svg
+                  width="25px"
+                  height="25px"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g
+                    id="SVGRepo_tracerCarrier"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <path
+                      d="M7.5 18C8.32843 18 9 18.6716 9 19.5C9 20.3284 8.32843 21 7.5 21C6.67157 21 6 20.3284 6 19.5C6 18.6716 6.67157 18 7.5 18Z"
+                      stroke="#C7C7C7"
+                      stroke-width="1.5"></path>
+                    <path
+                      d="M16.5 18.0001C17.3284 18.0001 18 18.6716 18 19.5001C18 20.3285 17.3284 21.0001 16.5 21.0001C15.6716 21.0001 15 20.3285 15 19.5001C15 18.6716 15.6716 18.0001 16.5 18.0001Z"
+                      stroke="#C7C7C7"
+                      stroke-width="1.5"></path>
+                    <path
+                      d="M2.26121 3.09184L2.50997 2.38429H2.50997L2.26121 3.09184ZM2.24876 2.29246C1.85799 2.15507 1.42984 2.36048 1.29246 2.75124C1.15507 3.14201 1.36048 3.57016 1.75124 3.70754L2.24876 2.29246ZM4.58584 4.32298L5.20507 3.89983V3.89983L4.58584 4.32298ZM5.88772 14.5862L5.34345 15.1022H5.34345L5.88772 14.5862ZM20.6578 9.88275L21.3923 10.0342L21.3933 10.0296L20.6578 9.88275ZM20.158 12.3075L20.8926 12.4589L20.158 12.3075ZM20.7345 6.69708L20.1401 7.15439L20.7345 6.69708ZM19.1336 15.0504L18.6598 14.469L19.1336 15.0504ZM5.70808 9.76V7.03836H4.20808V9.76H5.70808ZM2.50997 2.38429L2.24876 2.29246L1.75124 3.70754L2.01245 3.79938L2.50997 2.38429ZM10.9375 16.25H16.2404V14.75H10.9375V16.25ZM5.70808 7.03836C5.70808 6.3312 5.7091 5.7411 5.65719 5.26157C5.60346 4.76519 5.48705 4.31247 5.20507 3.89983L3.96661 4.74613C4.05687 4.87822 4.12657 5.05964 4.1659 5.42299C4.20706 5.8032 4.20808 6.29841 4.20808 7.03836H5.70808ZM2.01245 3.79938C2.68006 4.0341 3.11881 4.18965 3.44166 4.34806C3.74488 4.49684 3.87855 4.61727 3.96661 4.74613L5.20507 3.89983C4.92089 3.48397 4.54304 3.21763 4.10241 3.00143C3.68139 2.79485 3.14395 2.60719 2.50997 2.38429L2.01245 3.79938ZM4.20808 9.76C4.20808 11.2125 4.22171 12.2599 4.35876 13.0601C4.50508 13.9144 4.79722 14.5261 5.34345 15.1022L6.43198 14.0702C6.11182 13.7325 5.93913 13.4018 5.83723 12.8069C5.72607 12.1578 5.70808 11.249 5.70808 9.76H4.20808ZM10.9375 14.75C9.52069 14.75 8.53763 14.7482 7.79696 14.6432C7.08215 14.5418 6.70452 14.3576 6.43198 14.0702L5.34345 15.1022C5.93731 15.7286 6.69012 16.0013 7.58636 16.1283C8.45674 16.2518 9.56535 16.25 10.9375 16.25V14.75ZM4.95808 6.87H17.0888V5.37H4.95808V6.87ZM19.9232 9.73135L19.4235 12.1561L20.8926 12.4589L21.3923 10.0342L19.9232 9.73135ZM17.0888 6.87C17.9452 6.87 18.6989 6.871 19.2937 6.93749C19.5893 6.97053 19.8105 7.01643 19.9659 7.07105C20.1273 7.12776 20.153 7.17127 20.1401 7.15439L21.329 6.23978C21.094 5.93436 20.7636 5.76145 20.4632 5.65587C20.1567 5.54818 19.8101 5.48587 19.4604 5.44678C18.7646 5.369 17.9174 5.37 17.0888 5.37V6.87ZM21.3933 10.0296C21.5625 9.18167 21.7062 8.47024 21.7414 7.90038C21.7775 7.31418 21.7108 6.73617 21.329 6.23978L20.1401 7.15439C20.2021 7.23508 20.2706 7.38037 20.2442 7.80797C20.2168 8.25191 20.1002 8.84478 19.9223 9.73595L21.3933 10.0296ZM16.2404 16.25C17.0021 16.25 17.6413 16.2513 18.1566 16.1882C18.6923 16.1227 19.1809 15.9794 19.6074 15.6318L18.6598 14.469C18.5346 14.571 18.3571 14.6525 17.9744 14.6994C17.5712 14.7487 17.0397 14.75 16.2404 14.75V16.25ZM19.4235 12.1561C19.2621 12.9389 19.1535 13.4593 19.0238 13.8442C18.9007 14.2095 18.785 14.367 18.6598 14.469L19.6074 15.6318C20.0339 15.2842 20.2729 14.8346 20.4453 14.3232C20.6111 13.8312 20.7388 13.2049 20.8926 12.4589L19.4235 12.1561Z"
+                      fill="#C7C7C7"></path>
+                    <path
+                      d="M9.5 9L10.0282 12.1179"
+                      stroke="#C7C7C7"
+                      stroke-width="1.5"
+                      stroke-linecap="round"></path>
+                    <path
+                      d="M15.5283 9L15.0001 12.1179"
+                      stroke="#C7C7C7"
+                      stroke-width="1.5"
+                      stroke-linecap="round"></path>
+                  </g>
+                </svg>
+              </span>
+              Sold
+            </a>
+          </li>
+          <!-- Sales -->
+          <li>
+            <a
+              href="../../html/Admin/Sales.html"
+              class="flex items-center gap-3 text-black font-medium whitespace-nowrap py-3 transition ease-in-out hover:text-gray-800 hover:bg-transparent hover:rounded">
+              <span class="material-symbols-outlined rounded-full p-2 bg-white">
+                <svg
+                  width="25px"
+                  height="25px"
+                  viewBox="0 0 16 16"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none">
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g
+                    id="SVGRepo_tracerCarrier"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <g fill="#C7C7C7">
+                      <path
+                        d="M12 2a1 1 0 011 1v10a1 1 0 11-2 0V3a1 1 0 011-1zM8 6a1 1 0 011 1v6a1 1 0 11-2 0V7a1 1 0 011-1zM5 10a1 1 0 00-2 0v3a1 1 0 102 0v-3z"></path>
+                    </g>
+                  </g>
+                </svg>
+              </span>
+              Sales
+            </a>
+          </li>
+          <!-- Waste -->
+          <li>
+            <a
+              href="../../html/Admin/waste.html"
+              class="flex items-center gap-3 text-black font-medium whitespace-nowrap py-3 transition ease-in-out hover:text-gray-800 hover:bg-transparent hover:rounded">
+              <span class="material-symbols-outlined rounded-full p-2 bg-white">
+                <svg
+                  width="25px"
+                  height="25px"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g
+                    id="SVGRepo_tracerCarrier"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <path
+                      d="M20.5001 6H3.5"
+                      stroke="#C7C7C7"
+                      stroke-width="1.5"
+                      stroke-linecap="round"></path>
+                    <path
+                      d="M18.8332 8.5L18.3732 15.3991C18.1962 18.054 18.1077 19.3815 17.2427 20.1907C16.3777 21 15.0473 21 12.3865 21H11.6132C8.95235 21 7.62195 21 6.75694 20.1907C5.89194 19.3815 5.80344 18.054 5.62644 15.3991L5.1665 8.5"
+                      stroke="#C7C7C7"
+                      stroke-width="1.5"
+                      stroke-linecap="round"></path>
+                    <path
+                      d="M6.5 6C6.55588 6 6.58382 6 6.60915 5.99936C7.43259 5.97849 8.15902 5.45491 8.43922 4.68032C8.44784 4.65649 8.45667 4.62999 8.47434 4.57697L8.57143 4.28571C8.65431 4.03708 8.69575 3.91276 8.75071 3.8072C8.97001 3.38607 9.37574 3.09364 9.84461 3.01877C9.96213 3 10.0932 3 10.3553 3H13.6447C13.9068 3 14.0379 3 14.1554 3.01877C14.6243 3.09364 15.03 3.38607 15.2493 3.8072C15.3043 3.91276 15.3457 4.03708 15.4286 4.28571L15.5257 4.57697C15.5433 4.62992 15.5522 4.65651 15.5608 4.68032C15.841 5.45491 16.5674 5.97849 17.3909 5.99936C17.4162 6 17.4441 6 17.5 6"
+                      stroke="#C7C7C7"
+                      stroke-width="1.5"></path>
+                  </g>
+                </svg>
+              </span>
+              Waste
+            </a>
+          </li>
+          <!-- Stock -->
+          <li>
+            <a
+              href="../../html/Admin/Stok.html"
+              class="flex items-center gap-3 text-black font-medium whitespace-nowrap py-3 transition ease-in-out hover:text-gray-800 hover:bg-transparent hover:rounded">
+              <span class="material-symbols-outlined rounded-full p-2 bg-white">
+                <svg
+                  fill="#C7C7C7"
+                  height="25px"
+                  width="25px"
+                  version="1.1"
+                  id="Layer_1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  viewBox="0 0 512 512"
+                  xml:space="preserve">
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g
+                    id="SVGRepo_tracerCarrier"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <g>
+                      <g>
+                        <path
+                          d="M489.17,409.527H94.822V92.526c0-9.205-7.463-16.668-16.668-16.668H22.829c-9.205,0-16.668,7.463-16.668,16.668 s7.463,16.668,16.668,16.668h38.655v317.001c0,9.205,7.463,16.668,16.668,16.668h22.074c-2.256,5.732-3.509,11.965-3.509,18.487 c0,27.927,22.72,50.648,50.648,50.648s50.648-22.721,50.648-50.648c0-6.523-1.253-12.756-3.509-18.487h170.338 c-2.256,5.732-3.509,11.965-3.509,18.487c0,27.927,22.72,50.648,50.648,50.648s50.649-22.721,50.649-50.648 c0-6.523-1.253-12.756-3.509-18.487h30.048c9.205,0,16.668-7.463,16.668-16.668C505.838,416.99,498.376,409.527,489.17,409.527z M147.367,478.663c-9.545,0-17.312-7.766-17.312-17.312s7.766-17.312,17.312-17.312s17.312,7.766,17.312,17.312 C164.679,470.897,156.913,478.663,147.367,478.663z M411.984,478.663c-9.545,0-17.312-7.766-17.312-17.312 s7.766-17.312,17.312-17.312s17.312,7.766,17.312,17.312C429.296,470.897,421.529,478.663,411.984,478.663z"></path>
+                      </g>
+                    </g>
+                    <g>
+                      <g>
+                        <path
+                          d="M489.17,0H166.311c-9.205,0-16.668,7.463-16.668,16.668c0,14.447,0,314.854,0,329.301c0,9.205,7.463,16.668,16.668,16.668 h322.86c9.205,0,16.668-7.463,16.668-16.668c0-14.447,0-314.854,0-329.301C505.838,7.463,498.376,0,489.17,0z M472.503,329.301 h-0.001H182.98V197.987h289.523V329.301z M472.503,164.65H182.98V33.337h289.523V164.65z"></path>
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+              </span>
+              Stock
+            </a>
+          </li>
+        </ul>
+      </aside>
+      <!-- Fill Add-->
+      <div class="container px-6 mx-auto grid">
+        <div class="flex flex-row justify-between items-center px-4">
+          <!-- Judul -->
+          <div class="flex flex-col">
+            <h1 class="text-4xl font-semibold">Add Product</h1>
+            <p class="text-base text-s late-500 font-normal py-2">
+              History of your product activities
+            </p>
+          </div>
+
+          <!-- Form Submit -->
+          <form class="flex flex-row items-end space-x-4">
+            <div class="self-end">
+              <button
+                type="button"
+                id="open-pop-up"
+                class="bg-orange-500 py-3 px-8 font-semibold rounded-full text-white">
+                Add
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Table -->
+        <div class="w-full overflow-hidden rounded-lg shadow-xs px-2">
+          <div class="w-full">
+            <table id="example" class="display" style="width: 100%">
+              <thead>
+                <tr>
+                  <th>Product Name</th>
+                  <th>Unit</th>
+                  <th>Price</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Ayam Geprek</td>
+                  <td>PCS</td>
+                  <td>Rp. 2.000</td>
+                  <td>Edit Delete</td>
+                </tr>
+                <tr>
+                  <td>Ayam Geprek</td>
+                  <td>PCS</td>
+                  <td>Rp. 1.000</td>
+                  <td>Edit Delete</td>
+                </tr>
+                <tr>
+                  <td>Ayam Geprek</td>
+                  <td>PCS</td>
+                  <td>Rp. 2.000</td>
+                  <td>Edit Delete</td>
+                </tr>
+                <tr>
+                  <td>Tepung</td>
+                  <td>GR</td>
+                  <td>Rp. 1.000</td>
+                  <td>Edit Delete</td>
+                </tr>
+                <tr>
+                  <td>Ayam</td>
+                  <td>PCS</td>
+                  <td>Rp. 2.000</td>
+                  <td>Edit Delete</td>
+                </tr>
+                <tr>
+                  <td>Tepung</td>
+                  <td>GR</td>
+                  <td>Rp. 1.000</td>
+                  <td>Edit Delete</td>
+                </tr>
+                <tr>
+                  <td>Ayam</td>
+                  <td>PCS</td>
+                  <td>Rp. 2.000</td>
+                  <td>Edit Delete</td>
+                </tr>
+                <tr>
+                  <td>Tepung</td>
+                  <td>GR</td>
+                  <td>Rp. 1.000</td>
+                  <td>Edit Delete</td>
+                </tr>
+                <tr>
+                  <td>Ayam</td>
+                  <td>PCS</td>
+                  <td>Rp. 2.000</td>
+                  <td>Edit Delete</td>
+                </tr>
+                <tr>
+                  <td>Tepung</td>
+                  <td>GR</td>
+                  <td>Rp. 1.000</td>
+                  <td>Edit Delete</td>
+                </tr>
+                <tr>
+                  <td>Ayam</td>
+                  <td>PCS</td>
+                  <td>Rp. 2.000</td>
+                  <td>Edit Delete</td>
+                </tr>
+                <tr>
+                  <td>Tepung</td>
+                  <td>GR</td>
+                  <td>Rp. 1.000</td>
+                  <td>Edit Delete</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Modal -->
+    <div
+      id="confirmation-modal"
+      class="fixed inset-0 flex items-end justify-end z-50 h-full hidden overflow-hidden">
+      <div class="bg-black bg-opacity-50 absolute inset-0"></div>
+      <div
+        class="bg-bg1 rounded-lg p-8 z-10 relative h-[96%] w-1/2 mr-2 mb-4 flex flex-col gap-4 overflow-y-auto">
+        <!-- Add Menu -->
+        <div class="flex flex-row justify-between items-start">
+          <h2 class="text-2xl font-semibold">Add Product</h2>
+          <button
+            id="close-button"
+            class="relative text-gray-600 hover:text-gray-900">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Form Add Product -->
+        <div
+          class="rounded-lg bg-white h-auto w-full p-4 overflow-y-vis"
+          id="FormMenu">
+          <div class="flex flex-col justify-between items-start w-full gap-4">
+            <form class="mx-auto w-full">
+              <label
+                for="menu-name"
+                class="block mb-2 text-sm font-medium text-gray-900"
+                >Product Name</label
+              >
+              <select
+                id="menu-name"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                <option selected disabled>Product name to choose</option>
+                <option value="US">United States</option>
+                <option value="CA">Canada</option>
+                <option value="FR">France</option>
+                <option value="DE">Germany</option>
+              </select>
+            </form>
+            <div class="flex justify-start gap-4 w-full">
+              <div class="mx-auto w-full">
+                <label
+                  for="first_name"
+                  class="block mb-2 text-sm font-medium text-gray-900"
+                  >Product Price(Rp)</label
+                >
+                <input
+                  type="number"
+                  id="first_name"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  placeholder="1234"
+                  required />
+              </div>
+              <div class="w-full">
+                <label
+                  for="menu-price"
+                  class="block mb-2 text-sm font-medium text-gray-900"
+                  >Variant Menu</label
+                >
+                <select
+                  id="menu-price"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                  <option selected>Variant to choose</option>
+                  <option value="US">United States</option>
+                  <option value="CA">Canada</option>
+                  <option value="FR">France</option>
+                  <option value="DE">Germany</option>
+                </select>
+              </div>
+            </div>
+            <button
+              id="add-raw-material-bttn"
+              class="flex flex-row items-center mt-4">
+              <svg
+                width="25px"
+                height="25px"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M6 12H18"
+                  stroke="#F97013"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"></path>
+                <path
+                  d="M12 18V6"
+                  stroke="#F97013"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"></path>
+              </svg>
+              <p class="text-sm font-normal font-pop text-[#F97013] ml-2">
+                Raw Material Input
+              </p>
+            </button>
+            <div id="raw-material-section" class="w-full mt-4"></div>
+          </div>
+        </div>
+
+        <!-- Modal Raw Material -->
+        <div
+          id="raw-material-modal"
+          class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 overflow-y-auto">
+          <div class="bg-white p-4 rounded-lg w-1/2 overflow-y-scroll h-3/4">
+            <div class="flex flex-col justify-center items-center gap-2 p-4">
+              <form class="mx-auto w-full">
+                <label
+                  for="raw-material-select"
+                  class="block mb-2 text-sm font-medium text-gray-900"
+                  >Raw Material</label
+                >
+                <select
+                  id="raw-material-select"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                  <option selected disabled>Raw Material to choose</option>
+                  <option value="Tepung">Tepung</option>
+                  <option value="Minyak">Minyak</option>
+                  <option value="Gula">Gula</option>
+                  <option value="Garam">Garam</option>
+                </select>
+              </form>
+              <form class="mx-auto w-full">
+                <label
+                  for="weight"
+                  class="block mb-2 text-sm font-medium text-gray-900"
+                  >Weight Raw Material</label
+                >
+                <input
+                  type="number"
+                  id="weight"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  placeholder="1000"
+                  required />
+              </form>
+              <form class="mx-auto w-full">
+                <label
+                  for="price"
+                  class="block mb-2 text-sm font-medium text-gray-900"
+                  >Price Raw Material (Rp)</label
+                >
+                <input
+                  type="number"
+                  id="price"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  placeholder="1000"
+                  required />
+              </form>
+              <div class="mt-4">
+                <button id="material-new" class="flex flex-row items-center">
+                  <svg
+                    width="25px"
+                    height="25px"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M6 12H18"
+                      stroke="#F97013"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"></path>
+                    <path
+                      d="M12 18V6"
+                      stroke="#F97013"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"></path>
+                  </svg>
+                  <p class="text-sm font-normal font-pop text-[#F97013] ml-2">
+                    Add new material
+                  </p>
+                </button>
+              </div>
+              <!-- New Material -->
+              <div id="form-material" class="w-full"></div>
+            </div>
+            <button
+              id="add-raw-material"
+              class="bg-blue-500 text-white px-4 py-2 rounded-full">
+              Add Material
+            </button>
+            <button
+              id="cancel-modal"
+              class="bg-gray-500 text-white px-4 py-2 rounded-full ml-2">
+              Cancel
+            </button>
+          </div>
+        </div>
+
+        <!-- Button Add Packet -->
+        <div class="mt-4">
+          <button id="paket-new" class="flex flex-row items-center">
+            <svg
+              width="25px"
+              height="25px"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M6 12H18"
+                stroke="#F97013"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"></path>
+              <path
+                d="M12 18V6"
+                stroke="#F97013"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"></path>
+            </svg>
+            <p class="text-sm font-normal font-pop text-[#F97013] ml-2">
+              Add new package
+            </p>
+          </button>
+        </div>
+
+        <!-- New Form -->
+        <div id="form-container"></div>
+
+        <!-- Button Send and Cancel -->
+        <div class="pt-28 flex justify-end items-end">
+          <div class="flex flex-row items-end gap-6">
+            <button
+              id="cancel-button"
+              class="bg-white py-3 px-8 font-semibold rounded-full text-orange-500 border-orange-500 border-[1px]">
+              <p>Cancel</p>
+            </button>
+            <button
+              class="bg-orange-500 py-3 px-8 font-semibold rounded-full text-white">
+              Send
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Responsive -->
+    <script src="../../js/Add_Product.js"></script>
+  </body>
+</html>

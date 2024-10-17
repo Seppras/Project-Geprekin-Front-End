@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.active {
+  @apply bg-orange-500 rounded-full;
+}
+#dt-search-0 {
+  @apply bg-white;
+}
+#dt-length-0 {
+  @apply bg-white;
+}
+.pagination a {
+  @apply bg-transparent text-red-400 border-none focus:ring-transparent;
+}
+/* .pagination a:active{
+  @apply bg-red-500;
+} */
+table.dataTable thead > tr > th {
+  @apply bg-slate-100  text-black;
+}
+table.dataTable tbody > tr > td {
+  @apply bg-white shadow-lg text-black;
+}
+table.dataTable tbody > tr > td:first-child {
+  @apply rounded-l-lg;
+}
+table.dataTable tbody > tr > td:last-child {
+  @apply rounded-r-lg;
+}
+table.dataTable tbody {
+  @apply divide-y-[6px] divide-slate-100;
+}
+.pagination a {
+  @apply px-2 text-slate-400;
+}
+.pagination a[aria-current="page"] {
+  @apply bg-transparent px-4 text-white bg-orange-500 border-none rounded-lg;
+}
+.pagination a[data-dt-idx="first"] {
+  @apply text-orange-400;
+}
+.pagination a[data-dt-idx="previous"] {
+  @apply text-orange-400;
+}
+.pagination a[data-dt-idx="next"] {
+  @apply text-orange-400;
+}
+.pagination a[data-dt-idx="last"] {
+  @apply text-orange-400;
+}
+.pagination a[aria-disabled="true"] {
+  @apply text-slate-400;
+}
